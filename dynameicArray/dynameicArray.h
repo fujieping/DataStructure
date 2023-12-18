@@ -14,29 +14,29 @@ typedef struct dynameicArray
 /* API:application program interface.*/
 
 /* 动态数组的初始化*/
-int dynameicArrayInit();
+int dynameicArrayInit(dynameicArray *pArray);
 
 /* 动态数组插入数据(默认插到数组的末尾)*/
-int dynameicArrayInsertData();
+int dynameicArrayInsertData(dynameicArray *pArray, ELEMENTTYPE val);
 
 /* 动态数组插入数据，在指定位置插入*/
-int dynameicArrayAppointPosInserData();
+int dynameicArrayAppointPosInserData(dynameicArray *pArray, int pos, ELEMENTTYPE val);
 
 /* 动态数组修改指定位置数据*/
-int dynameicArrayModifyAppointPosData();
+int dynameicArrayModifyAppointPosData(dynameicArray *pArray, int pos, ELEMENTTYPE val);
 
 /* 动态数组删除数据(默认删除数组末尾)*/
-int dynameicArrayDeleteData();
+int dynameicArrayDeleteData(dynameicArray *pArray);
 
 /* 动态数组删除数据，删除指定数据*/
-int dynameicArrayDeleteAppointPosData();
+int dynameicArrayDeleteAppointPosData(dynameicArray *pArray, int pos);
 
 /* 动态数组销毁*/
-int dynameicArrayDestroy();
+int dynameicArrayDestroy(dynameicArray *pArray);
 
 /* 获取动态数组的大小*/
-int dynameicArrayGetSize();
+int dynameicArrayGetSize(dynameicArray *pArray, int *pSize);
 
 /* 获取动态数组的容量*/
-int dynameicArrayGetCapacity();
+int dynameicArrayGetCapacity(dynameicArray *pArray, int *pCapacity);
 #endif
