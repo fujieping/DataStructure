@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include "dynameicArray.h"
+#include <string.h>
 
 #define BUFFER_SIZE 20
-#define DEFAULT_NUM 5
+#define DEFAULT_NUM 3
 
 typedef struct stuInfo
 {
@@ -46,8 +47,25 @@ int main()
     }
 
     /* 删除指定*/
-#endif
+#elif 0
+    int buffer[DEFAULT_NUM] = {1, 2, 3};
+    for(int idx = 0; idx < DEFAULT_NUM; idx++)
+    {
+        dynameicArrayInsertData(&array, (void*)&buffer[idx]);
+    }
 
+    int size = 0;
+    dynameicArrayGetSize(&array, &size);
+    printf("size:%d\n", size);
+
+    int *val = NULL;
+    for(int idx = 0; idx < DEFAULT_NUM; idx++)
+    {
+        dynameicArrayDeleteAppointPosVal(&array, idx, (void*)&val);
+        printf("val:%d\n", *val);
+    }
+    
+#elif 0
     stuInfo stu1, stu2, stu3;
     memset(&stu1, 0, sizeof(stu1));
     memset(&stu2, 0, sizeof(stu2));
@@ -62,9 +80,26 @@ int main()
     stu3.age = 30;
     stu3.sex = 'm';
 
-    dynameicArrayInsertData(&array, stu1);
-    dynameicArrayInsertData(&array, stu2);
-    dynameicArrayInsertData(&array, stu3);
+    stuInfo buffer[DEFAULT_NUM] = {stu1, stu2, stu3};
+    for(int idx = 0; idx < DEFAULT_NUM; idx++)
+    {
+        dynameicArrayInsertData(&array, (void*)&buffer[idx]);
+    }
     
+    int size = 0;
+    dynameicArrayGetSize(&array, &size);
+    printf("size:%d\n", size);
+
+    stuInfo *info = NULL;
+    //memser(&info, 0, sizeof(info));
+    for (int idx = 0; idx < DEFAULT_NUM; idx++)
+    {
+        dynameicArrayDeleteAppointPosVal(&array, idx, (void*)&info);
+        printf("info.age:%d\tinfo.sex:%c\n", info->age, info->sex);
+    }
+
+#else
+    
+#endif
     return 0;
 }
