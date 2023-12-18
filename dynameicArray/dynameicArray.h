@@ -28,8 +28,11 @@ int dynameicArrayModifyAppointPosData(dynameicArray *pArray, int pos, ELEMENTTYP
 /* 动态数组删除数据(默认删除数组末尾)*/
 int dynameicArrayDeleteData(dynameicArray *pArray);
 
-/* 动态数组删除数据，删除指定数据*/
+/* 动态数组删除数据，删除指定位置数据*/
 int dynameicArrayDeleteAppointPosData(dynameicArray *pArray, int pos);
+
+/* 动态数组删除指定的元素*/
+int dynameicArrayDeleteAppointData(dynameicArray *pArray, ELEMENTTYPE val);
 
 /* 动态数组销毁*/
 int dynameicArrayDestroy(dynameicArray *pArray);
