@@ -42,4 +42,7 @@ int dynameicArrayGetSize(dynameicArray *pArray, int *pSize);
 
 /* 获取动态数组的容量*/
 int dynameicArrayGetCapacity(dynameicArray *pArray, int *pCapacity);
+
+/* 获取指定位置的元素数据*/
+int dynameicArrayDeleteAppointPosVal(dynameicArray *pArray, int pos, ELEMENTTYPE *pVal);
 #endif

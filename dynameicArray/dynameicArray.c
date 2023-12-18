@@ -274,3 +274,22 @@ int dynameicArrayGetCapacity(dynameicArray *pArray, int *pCapacity)
     }
     return ON_SUCCESS;
 }
+
+/* 获取指定位置的元素数据*/
+int dynameicArrayDeleteAppointPosVal(dynameicArray *pArray, int pos, ELEMENTTYPE *pVal)
+{
+    if(pArray == NULL)
+    {
+        return NULL_PTR;
+    }
+    if(pos < 0 || pos >= pArray->len)
+    {
+        return INVALID_ACCESS;
+    }
+
+    if(pVal)
+    {
+        *pVal = pArray->data[pos];
+    }
+    return ON_SUCCESS;
+}
