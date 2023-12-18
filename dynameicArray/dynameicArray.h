@@ -14,7 +14,7 @@ typedef struct dynameicArray
 /* API:application program interface.*/
 
 /* 动态数组的初始化*/
-int dynameicArrayInit(dynameicArray *pArray);
+int dynameicArrayInit(dynameicArray *pArray, int capacity);
 
 /* 动态数组插入数据(默认插到数组的末尾)*/
 int dynameicArrayInsertData(dynameicArray *pArray, ELEMENTTYPE val);
