@@ -19,7 +19,7 @@ static int expandDynameicCapacity(dynameicArray *pArray);
 static int shrinkDynameicCapacity(dynameicArray *pArray);
 
 /* 动态数组的初始化*/
-int dynameicArrayInit(dynameicArray *pArray, int capacity)
+int dynameicArrayInit(dynameicArray *pArray, int capacity)   
 {
     if (pArray == NULL)
     {
@@ -179,24 +179,24 @@ static int shrinkDynameicCapacity(dynameicArray *pArray)
 int dynameicArrayDeleteAppointPosData(dynameicArray *pArray, int pos)
 {
     /* 指针判空*/
-    if (pArray = NULL)
+    if (pArray == NULL)
     {
         return NULL_PTR;
-    }
+    };
     /* 判断位置的合法性*/
-    if (pos < 0 || pos >= pArray->len)
+    if (pos < 0 || pos >= (pArray->len))
     {
         return INVALID_ACCESS;
     }
 
     /* 缩容:缩了一半*/
-    if (pArray->capacity >> 1 > pArray->len)
+    if (pArray->len < pArray->capacity >> 1)
     {
         shrinkDynameicCapacity(pArray);
     }
 
     /* 数据前移*/
-    for (int idx = pos; idx < pArray->len; idx++)
+    for (int idx = pos; idx < pArray->len - 1; idx++)
     {
         pArray->data[idx] = pArray->data[idx + 1];
     }
@@ -210,6 +210,7 @@ int dynameicArrayDeleteAppointData(dynameicArray *pArray, ELEMENTTYPE val)
 {
     /* todo..*/
 #if 0
+    /* 从前面开始遍历并删除，多个重复不能全部删除*/
     for (int idx = 0; idx < pArray->len; idx++)
     {
         if(val == pArray->data[idx])
@@ -219,7 +220,8 @@ int dynameicArrayDeleteAppointData(dynameicArray *pArray, ELEMENTTYPE val)
         }
     }
 #else
-    for (int idx = pArray->len; idx >= 0; idx--)
+    /* 从后面开始遍历并删除，多个重复也可删除*/
+    for (int idx = pArray->len -1; idx >= 0; idx--)
     {
         if(val == pArray->data[idx])
         {

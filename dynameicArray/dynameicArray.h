@@ -1,20 +1,22 @@
 #ifndef __DYNAMEIC_ARRAY_H_
 #define __DYNAMEIC_ARRAY_H_
 
-typedef void* ELEMENTTYPE;
+#define ELEMENTTYPE int
 /* 避免头文件重复包含*/
 typedef struct dynameicArray
 {
-    ELEMENTTYPE *data;    /* 数组的空间*/
-    int len;     /* 数组的大小*/
-    int capacity;/* 数组的容量*/
+    ELEMENTTYPE *data; /* 数组的空间*/
+    int len;           /* 数组的大小*/
+    int capacity;      /* 数组的容量*/
 
-}dynameicArray;
+} dynameicArray;
 
 /* API:application program interface.*/
 
 /* 动态数组的初始化*/
 int dynameicArrayInit(dynameicArray *pArray, int capacity);
+
+/* 指针判空*/
 
 /* 动态数组插入数据(默认插到数组的末尾)*/
 int dynameicArrayInsertData(dynameicArray *pArray, ELEMENTTYPE val);

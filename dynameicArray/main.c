@@ -16,14 +16,31 @@ int main()
     dynameicArray array;
     /* 初始化*/
     dynameicArrayInit(&array, BUFFER_SIZE);
-#if 0
-    {
+#if 1
+    
         /* 插入数据*/
-        dynameicArrayInsertData(&array, 3);
-        for(int idx = 1; idx <= DEFAULT_NUM; idx++)
+        int a = 3;
+        dynameicArrayInsertData(&array, a);
+        for(int idx = 0; idx < DEFAULT_NUM; idx++)
         {
-            dynameicArrayInsertData(&array, 21);
+            dynameicArrayInsertData(&array, idx);
         }
+
+        /* 修改数据*/
+        //dynameicArrayModifyAppointPosData(&array, 1, (void*)5);
+
+        /* 删除指定位置数据 */
+        //dynameicArrayDeleteAppointPosData(&array, 2);
+
+        /* 删除指定元素数据*/
+        int tmp = 0;
+        dynameicArrayDeleteAppointData(&array, tmp);
+
+    {
+        // int size = 0;
+        // /* 获取动态数组大小*/
+        // dynameicArrayGetSize(&array, &size);
+        
     }
 
     {
@@ -31,22 +48,16 @@ int main()
         /* 获取动态数组大小*/
         dynameicArrayGetSize(&array, &size);
         printf("size:%d\n", size);
-    }
-
-    {
-        int size = 0;
-        /* 获取动态数组大小*/
-        dynameicArrayGetSize(&array, &size);
 
         int val = 0;
         for(int idx = 0; idx < size; idx++)
         {
             dynameicArrayDeleteAppointPosVal(&array, idx, &val);
-            printf("val:%d\n", val);
+            printf("array[%d]  val:%d\n", idx, val);
         }
     }
 
-    /* 删除指定*/
+    
 #elif 0
     int buffer[DEFAULT_NUM] = {1, 2, 3};
     for(int idx = 0; idx < DEFAULT_NUM; idx++)
@@ -99,7 +110,7 @@ int main()
     }
 
 #else
-    
+
 #endif
     return 0;
 }
