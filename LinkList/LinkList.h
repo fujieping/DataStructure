@@ -20,33 +20,33 @@ typedef struct LinkList
 }LinkList;
 
 /* 链表初始化*/
-int LinkListInit();
+int LinkListInit(LinkList ** pList);
 
 /* 链表头插*/
-int LinkListHeadInsert();
+int LinkListHeadInsert(LinkList * plist, ELEMENTTYPE val);
 
 /* 链表尾插*/
-int LinkListTailInsert();
+int LinkListTailInsert(LinkList * plist, ELEMENTTYPE val);
 
 /* 链表指定位置插入*/
-int LinkListAppointPosInsert();
+int LinkListAppointPosInsert(LinkList * plist, int pos, ELEMENTTYPE val);
 
 /* 头删*/
-int LinkListHeadDel();
+int LinkListHeadDel(LinkList * plist);
 
 /* 伪善*/
-int LinkListTailDel();
+int LinkListTailDel(LinkList * plist);
 
 /* 指定位置删*/
-int LinkListDelAppointPos();
+int LinkListDelAppointPos(LinkList * plist, int pos);
 
 /* 删除链表的指定元素*/
-int LinkListDelAppointData();
+int LinkListDelAppointData(LinkList * plist, ELEMENTTYPE val);
 
 /* 获取链表的长度*/
-int LinkListDetLen();
+int LinkListDetLen(LinkList * plist, int *pSize);
 
 /* 链表的销毁*/
-int LinkListDestroy();
+int LinkListDestroy(LinkList * plist);
 
 #endif
