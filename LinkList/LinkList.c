@@ -14,7 +14,7 @@ enum STATUS_CODE
 int LinkListInit(LinkList ** pList)
 {
     int ret = 0;
-    LinkList *list =(LinkList *)malloc(sizeof(LinkList)*1);
+    LinkList * list =(LinkList *)malloc(sizeof(LinkList)*1);
     if(list == NULL)
     {
         return MALLOC_ERROR;
@@ -29,6 +29,10 @@ int LinkListInit(LinkList ** pList)
     memset(list->head, 0, sizeof(LinkNOde) * 1);
     list->head->data = 0;
     list->head->next = NULL;
+
+    /* 尾指针初始化*/
+    list->tail = list->head;
+
     /* 链表的长度为0*/
     list->len = 0;
 
@@ -81,14 +85,30 @@ int LinkListAppointPosInsert(LinkList * pList, int pos, ELEMENTTYPE val)
 #else
     LinkNode * travelNode = pList->head->next;
 #endif
-    while(pos)
+    int flag = 0;
+    /* 这种情况下需要标记尾指针*/
+    if(pos == pList->len)
     {
-        travelNode = travelNode->next;
-        pos--;
+        travelNode = pList->tail;
+        flag = 1;
     }
+    else
+    {
+        while(pos)
+        {
+            travelNode = travelNode->next;
+            pos--;
+        }
+    }
+    
     /* 修改结点指向*/
     newNode->next = travelNode->next;
     travelNode->next = newNode;
+    if(flag)
+    {
+        /* 尾指针更新位置*/
+        pList->tail = newNode;
+    }
 
     /* 更新链表长度*/
     (pList->len)++;

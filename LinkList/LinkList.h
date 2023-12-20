@@ -14,8 +14,8 @@ typedef struct LinkNode
 /* 链表*/
 typedef struct LinkList
 {
-    LinkList * head;/* 链表的虚拟头结点*/
-
+    LinkNode * head;/* 链表的虚拟头结点*/
+    LinkNode * tail;/* 尾指针不需要分配空间*/
     int len;/* 链表长度*/
 }LinkList;
 
