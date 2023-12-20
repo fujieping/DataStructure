@@ -1,8 +1,9 @@
-#include "LinkList"
 #include <stdlib.h>
 #include <string.h>
+#include "LinkList.h"
 
-enum STATUS_CODE
+
+enum STATUS_CODEH
 {
     ON_SUCCESS,
     NULL_PTR,
@@ -19,14 +20,14 @@ int LinkListInit(LinkList ** pList)
     {
         return MALLOC_ERROR;
     }
-    memset(list, 0 sizeof(LinkList) * 1);
+    memset(list, 0, sizeof(LinkList) * 1);
 
-    list->head = (LinkNOde *)malloc(sizeof(LinkList)*1);
+    list->head = (LinkNode *)malloc(sizeof(LinkList)*1);
     if(list->head == NULL)
     {
         return MALLOC_ERROR;
     }
-    memset(list->head, 0, sizeof(LinkNOde) * 1);
+    memset(list->head, 0, sizeof(LinkNode) * 1);
     list->head->data = 0;
     list->head->next = NULL;
 
@@ -73,7 +74,7 @@ int LinkListAppointPosInsert(LinkList * pList, int pos, ELEMENTTYPE val)
     {
         return MALLOC_ERROR;
     }
-    memset(newNode, 0, sizeof(LinNode) * 1);
+    memset(newNode, 0, sizeof(LinkNode) * 1);
     newNode->data = 0;
     newNode->next = NULL;
 
@@ -119,19 +120,53 @@ int LinkListAppointPosInsert(LinkList * pList, int pos, ELEMENTTYPE val)
 /* 头删*/
 int LinkListHeadDel(LinkList * pList)
 {
-
+    return LinkListDelAppointPos(pList, 1);
 }
 
 /* 伪善*/
 int LinkListTailDel(LinkList * pList)
 {
-
+    return LinkListDelAppointPos(pList, pList->len);
 }
 
 /* 指定位置删*/
 int LinkListDelAppointPos(LinkList * pList, int pos)
 {
+    int ret = 0; 
+    if(pList == NULL)
+    {
+        return NULL_PTR;
+    }
 
+    if(pos <= 0 || pos > pList->len)
+    {
+        return INVALID_ACCESS;
+    }
+#if 1
+    LinkNode * travelNode = pList->head;
+#else
+#endif
+    while(--pos)
+    {
+        /* 向后移动位置*/
+        travelNode = travelNode->next;
+        //pos--;
+    }
+
+    /* 跳出循环找到一个结点*/
+    LinkNode * needDelNode = travelNode->next;
+    travelNode->next = needDelNode->next;
+
+    /* 释放内存*/
+    if(needDelNode != NULL)
+    {
+        free(needDelNode);
+        needDelNode = NULL;
+    }
+
+    /* 链表长度减短*/
+    pList->len--;
+    return ret;
 }
 
 /* 删除链表的指定元素*/
@@ -143,6 +178,7 @@ int LinkListDelAppointData(LinkList * pList, ELEMENTTYPE val)
 /* 获取链表的长度*/
 int LinkListDetLen(LinkList * pList, int *pSize)
 {
+    int ret = 0;
     if(pList == NULL)
     {
         return NULL_PTR;
