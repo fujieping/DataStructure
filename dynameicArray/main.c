@@ -16,7 +16,7 @@ int main()
     dynameicArray array;
     /* 初始化*/
     dynameicArrayInit(&array, BUFFER_SIZE);
-#if 1
+#if 0
     
         /* 插入数据*/
         int a = 3;
@@ -76,7 +76,7 @@ int main()
         printf("val:%d\n", *val);
     }
     
-#elif 0
+#elif 1
     stuInfo stu1, stu2, stu3;
     memset(&stu1, 0, sizeof(stu1));
     memset(&stu2, 0, sizeof(stu2));

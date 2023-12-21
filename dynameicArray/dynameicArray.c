@@ -206,7 +206,7 @@ int dynameicArrayDeleteAppointPosData(dynameicArray *pArray, int pos)
 }
 
 /* 动态数组删除指定的元素*/
-int dynameicArrayDeleteAppointData(dynameicArray *pArray, ELEMENTTYPE val)
+int dynameicArrayDeleteAppointData(dynameicArray *pArray, ELEMENTTYPE val, int(*Deletefunc)(ELEMENTTYPE val1, ELEMENTTYPE val2))
 {
     /* todo..*/
 #if 0
