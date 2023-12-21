@@ -41,7 +41,7 @@ int LinkListTailDel(LinkList * pList);
 int LinkListDelAppointPos(LinkList * pList, int pos);
 
 /* 删除链表的指定元素*/
-int LinkListDelAppointData(LinkList * pList, ELEMENTTYPE val);
+int LinkListDelAppointData(LinkList * pList, ELEMENTTYPE val, int(*Deletefunc)(ELEMENTTYPE vla1, ELEMENTTYPE val2));
 
 /* 获取链表的长度*/
 int LinkListDetLen(LinkList * pList, int *pSize);

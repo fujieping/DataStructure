@@ -3,7 +3,7 @@
 #include <string.h>
 #include "LinkList.h"
 
-#define BUFFER_SIZE 3
+#define BUFFER_SIZE 5
 #define DEFAULT_NUM 3
 
 typedef struct stuInfo
@@ -16,6 +16,19 @@ int printStruct(void *arg)
 {
    stuInfo *info = (stuInfo*)arg;
    printf("arg:%d\tsex:%c\n",info->age, info->sex);
+}
+
+int printInt(void *arg)
+{
+    int *data = (int*)arg;
+    printf("data:%d\n", *data);
+}
+
+int compare(ELEMENTTYPE val1, ELEMENTTYPE val2)
+{
+    int num1 = *(int *)val1;
+    int num2 = *(int *)val2;
+    return num1 == num2 ? 1:0;
 }
 
 int main()
@@ -40,7 +53,7 @@ int main()
 
   
 #endif
-#if 1
+#if 0
 stuInfo stu1, stu2, stu3;
     memset(&stu1, 0, sizeof(stu1));
     memset(&stu2, 0, sizeof(stu2));
@@ -56,19 +69,30 @@ stuInfo stu1, stu2, stu3;
     stu3.sex = 'm';
 
     stuInfo buffer[DEFAULT_NUM] = {stu1, stu2, stu3};
+#else
+    int array[BUFFER_SIZE] = {4, 2, 9, 4, 6};
 
     for(int idx = 0; idx < BUFFER_SIZE; idx++)
     {
-        LinkListHeadInsert(list, (void*)&buffer[idx]);
+        LinkListTailInsert(list, (void*)&array[idx]);
     }
 
+    /* 链表按位置插入*/
+    int a = 9;
+    LinkListAppointPosInsert(list, 4, (void *)&a);
+
+    /* 链表按位置删*/
+    //LinkListDelAppointPos(list, 1);
+
+    /* 链表按元素删*/
+    LinkListDelAppointData(list, (void*)&array[4], compare);
     /* 获取链表长度*/
     int size = 0;
     LinkListDetLen(list, &size);
     printf("size:%d\n", size);
 
     /*  遍历指针*/
-    LinkListForeach(list, printStruct);
+    LinkListForeach(list, printInt);
 #endif
     return 0;
 }

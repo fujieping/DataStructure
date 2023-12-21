@@ -126,7 +126,7 @@ int LinkListHeadDel(LinkList *pList)
     return LinkListDelAppointPos(pList, 1);
 }
 
-/* 伪善*/
+/* 尾删 */
 int LinkListTailDel(LinkList *pList)
 {
     return LinkListDelAppointPos(pList, pList->len);
@@ -212,9 +212,10 @@ static int LinkListAccrdAppointValGetPos(LinkList *pList, ELEMENTTYPE val, int *
     return NOT_FIND;
 }
 /* 删除链表的指定元素*/
-int LinkListDelAppointData(LinkList *pList, ELEMENTTYPE val)
+int LinkListDelAppointData(LinkList *pList, ELEMENTTYPE val, int (*Deletefunc)(ELEMENTTYPE vla1, ELEMENTTYPE val2))
 {
     int ret = 0;
+#if 0
     /* 在链表中的位置*/
     int pos = 0;
     /* 链表长度*/
@@ -224,8 +225,26 @@ int LinkListDelAppointData(LinkList *pList, ELEMENTTYPE val)
         LinkListAccrdAppointValGetPos(pList, val, &pos);
         LinkListDelAppointPos(pList, pos);
     }
+#endif
+    int pos = 1;
+    LinkNode *travelNode = pList->head->next;
+    while (travelNode != NULL)
+    {
+        ret = Deletefunc(val, travelNode->data);
+        travelNode = travelNode->next;
+        if (ret == 1)
+        {
+            LinkListDelAppointPos(pList, pos);
+            printf("ret:%d\n", ret);
+            ret = 0;
+            pos--;
+        }
+        printf("pos:%d\n", pos);
 
-    return ret;
+        pos++;
+    }
+
+    return ON_SUCCESS;
 }
 
 /* 获取链表的长度*/
