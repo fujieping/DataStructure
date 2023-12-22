@@ -14,6 +14,8 @@ enum STATUS_CODEH
 
 /* 静态函数，静态前置声明*/
 static int DoubleLinkListAccrdAppointValGetPos(DoubleLinkList *pList, ELEMENTTYPE val, int *pPos);
+/* 封装新建新结点，封装成函数*/
+static DoubleLinkList *createDoubleLinkNode(ELEMENTTYPE val);
 
 /* 链表初始化*/
 int DoubleLinkListInit(DoubleLinkList **pList)
@@ -34,6 +36,7 @@ int DoubleLinkListInit(DoubleLinkList **pList)
     memset(list->head, 0, sizeof(DoubleLinkNode) * 1);
     list->head->data = 0;
     list->head->next = NULL;
+    list->head->prev = NULL;
 
     /* 尾指针初始化*/
     list->tail = list->head;
@@ -58,6 +61,25 @@ int DoubleLinkListTailInsert(DoubleLinkList *pList, ELEMENTTYPE val)
     return DoubleLinkListAppointPosInsert(pList, pList->len, val);
 }
 
+static DoubleLinkList *createDoubleLinkNode(ELEMENTTYPE val)
+{
+    /* 封装结点*/
+    DoubleLinkNode *newNode = (DoubleLinkNode *)malloc(sizeof(DoubleLinkNode) * 1);
+    if (newNode == NULL)
+    {
+        return MALLOC_ERROR;
+    }
+    memset(newNode, 0, sizeof(DoubleLinkNode) * 1);
+    newNode->data = 0;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+
+    /* 赋值*/
+    newNode->data = val;
+
+    /* 返回新建结点*/
+    return newNode;
+}
 /* 链表指定位置插入*/
 int DoubleLinkListAppointPosInsert(DoubleLinkList *pList, int pos, ELEMENTTYPE val)
 {
@@ -71,7 +93,14 @@ int DoubleLinkListAppointPosInsert(DoubleLinkList *pList, int pos, ELEMENTTYPE v
     {
         return INVALID_ACCESS;
     }
-
+#if 1
+    /* 封装新建新结点，封装成函数*/
+    DoubleLinkNode *newNode = createDoubleLinkNode(val);
+    if(newNode == NULL)
+    {
+        return NULL_PTR;
+    }
+#else
     /* 封装结点*/
     DoubleLinkNode *newNode = (DoubleLinkNode *)malloc(sizeof(DoubleLinkNode) * 1);
     if (newNode == NULL)
@@ -84,6 +113,7 @@ int DoubleLinkListAppointPosInsert(DoubleLinkList *pList, int pos, ELEMENTTYPE v
 
     /* 赋值*/
     newNode->data = val;
+#endif
 #if 1
     /* 从头节点开始遍历*/
     DoubleLinkNode *travelNode = pList->head;
@@ -104,10 +134,12 @@ int DoubleLinkListAppointPosInsert(DoubleLinkList *pList, int pos, ELEMENTTYPE v
             travelNode = travelNode->next;
             pos--;
         }
+        travelNode->next->prev = newNode;
     }
 
     /* 修改结点指向*/
     newNode->next = travelNode->next;
+    newNode->prev = travelNode; 
     travelNode->next = newNode;
     if (flag)
     {
