@@ -181,24 +181,31 @@ int DoubleLinkListDelAppointPos(DoubleLinkList *pList, int pos)
     DoubleLinkNode *travelNode = pList->head;
 #else
 #endif
+    DoubleLinkNode *needDelNode = NULL;
     int flag = 0;
     /* 需要修改尾指针*/
     if (pos == pList->len)
     {
         flag = 1;
-    }
 
-    while (--pos)
+        DoubleLinkNode * tmpNode = pList->tail;
+        pList->tail = pList->tail->prev;
+        needDelNode = tmpNode;
+    }
+    else
     {
-        /* 向后移动位置*/
-        travelNode = travelNode->next;
-        // pos--;
+        while (--pos)
+        {
+            /* 向后移动位置*/
+            travelNode = travelNode->next;
+            // pos--;
+        }
+        /* 跳出循环找到一个结点*/
+        DoubleLinkNode *needDelNode = travelNode->next;
+        travelNode->next = needDelNode->next;
+        needDelNode->next->prev = travelNode;
     }
-
-    /* 跳出循环找到一个结点*/
-    DoubleLinkNode *needDelNode = travelNode->next;
-    travelNode->next = needDelNode->next;
-
+    
     if (flag)
     {
         /* 调整尾指针*/
