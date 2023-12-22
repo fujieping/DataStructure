@@ -20,8 +20,8 @@ int printStruct(void *arg)
 
 int printInt(void *arg)
 {
-    int *data = (int*)arg;
-    printf("data:%d\n", *data);
+    int data = *(int*)arg;
+    printf("data:%d\n", data);
 }
 
 int compare(ELEMENTTYPE val1, ELEMENTTYPE val2)
@@ -33,6 +33,7 @@ int compare(ELEMENTTYPE val1, ELEMENTTYPE val2)
 
 int main()
 {
+#if 1
     LinkList *list = NULL;
     /* 初始化链表*/
     LinkListInit(&list);
@@ -70,14 +71,14 @@ stuInfo stu1, stu2, stu3;
 
     stuInfo buffer[DEFAULT_NUM] = {stu1, stu2, stu3};
 #else
-    int array[BUFFER_SIZE] = {4, 2, 9, 4, 6};
+    // int array[BUFFER_SIZE] = {4, 2, 9, 4, 6};
 
-    for(int idx = 0; idx < BUFFER_SIZE; idx++)
-    {
-        LinkListTailInsert(list, (void*)&array[idx]);
-    }
+    // for(int idx = 0; idx < BUFFER_SIZE; idx++)
+    // {
+    //     LinkListTailInsert(list, (void*)&array[idx]);
+    // }
 
-    /* 链表按位置插入*/
+    // /* 链表按位置插入*/
     int a = 9;
     LinkListAppointPosInsert(list, 4, (void *)&a);
 
@@ -85,7 +86,7 @@ stuInfo stu1, stu2, stu3;
     //LinkListDelAppointPos(list, 1);
 
     /* 链表按元素删*/
-    LinkListDelAppointData(list, (void*)&array[4], compare);
+    LinkListDelAppointData(list, (void*)&a, compare);
     /* 获取链表长度*/
     int size = 0;
     LinkListDetLen(list, &size);
@@ -94,5 +95,7 @@ stuInfo stu1, stu2, stu3;
     /*  遍历指针*/
     LinkListForeach(list, printInt);
 #endif
+#endif
+
     return 0;
 }

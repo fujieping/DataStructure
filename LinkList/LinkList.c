@@ -26,7 +26,7 @@ int LinkListInit(LinkList **pList)
     }
     memset(list, 0, sizeof(LinkList) * 1);
 
-    list->head = (LinkNode *)malloc(sizeof(LinkList) * 1);
+    list->head = (LinkNode *)malloc(sizeof(LinkNode) * 1);
     if (list->head == NULL)
     {
         return MALLOC_ERROR;
@@ -235,11 +235,9 @@ int LinkListDelAppointData(LinkList *pList, ELEMENTTYPE val, int (*Deletefunc)(E
         if (ret == 1)
         {
             LinkListDelAppointPos(pList, pos);
-            printf("ret:%d\n", ret);
             ret = 0;
             pos--;
         }
-        printf("pos:%d\n", pos);
 
         pos++;
     }
