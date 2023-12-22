@@ -13,18 +13,18 @@ enum STATUS_CODEH
 };
 
 /* 静态函数，静态前置声明*/
-static int LinkListAccrdAppointValGetPos(LinkList *pList, ELEMENTTYPE val, int *pPos);
+static int DoubleLinkListAccrdAppointValGetPos(DoubleLinkList *pList, ELEMENTTYPE val, int *pPos);
 
 /* 链表初始化*/
-int LinkListInit(LinkList **pList)
+int DoubleLinkListInit(DoubleLinkList **pList)
 {
     int ret = 0;
-    LinkList *list = (LinkList *)malloc(sizeof(LinkList) * 1);
+    DoubleLinkList *list = (DoubleLinkList *)malloc(sizeof(DoubleLinkList) * 1);
     if (list == NULL)
     {
         return MALLOC_ERROR;
     }
-    memset(list, 0, sizeof(LinkList) * 1);
+    memset(list, 0, sizeof(DoubleLinkList) * 1);
 
     list->head = (DoubleLinkNode *)malloc(sizeof(DoubleLinkNode) * 1);
     if (list->head == NULL)
@@ -47,19 +47,19 @@ int LinkListInit(LinkList **pList)
 }
 
 /* 链表头插*/
-int LinkListHeadInsert(LinkList *pList, ELEMENTTYPE val)
+int DoubleLinkListHeadInsert(DoubleLinkList *pList, ELEMENTTYPE val)
 {
-    return LinkListAppointPosInsert(pList, 0, val);
+    return DoubleLinkListAppointPosInsert(pList, 0, val);
 }
 
 /* 链表尾插*/
-int LinkListTailInsert(LinkList *pList, ELEMENTTYPE val)
+int DoubleLinkListTailInsert(DoubleLinkList *pList, ELEMENTTYPE val)
 {
-    return LinkListAppointPosInsert(pList, pList->len, val);
+    return DoubleLinkListAppointPosInsert(pList, pList->len, val);
 }
 
 /* 链表指定位置插入*/
-int LinkListAppointPosInsert(LinkList *pList, int pos, ELEMENTTYPE val)
+int DoubleLinkListAppointPosInsert(DoubleLinkList *pList, int pos, ELEMENTTYPE val)
 {
     int ret = 0;
     if (pList == NULL)
@@ -121,19 +121,19 @@ int LinkListAppointPosInsert(LinkList *pList, int pos, ELEMENTTYPE val)
 }
 
 /* 头删*/
-int LinkListHeadDel(LinkList *pList)
+int DoubleLinkListHeadDel(DoubleLinkList *pList)
 {
-    return LinkListDelAppointPos(pList, 1);
+    return DoubleLinkListDelAppointPos(pList, 1);
 }
 
 /* 尾删 */
-int LinkListTailDel(LinkList *pList)
+int DoubleLinkListTailDel(DoubleLinkList *pList)
 {
-    return LinkListDelAppointPos(pList, pList->len);
+    return DoubleLinkListDelAppointPos(pList, pList->len);
 }
 
 /* 指定位置删*/
-int LinkListDelAppointPos(LinkList *pList, int pos)
+int DoubleLinkListDelAppointPos(DoubleLinkList *pList, int pos)
 {
     int ret = 0;
     if (pList == NULL)
@@ -186,7 +186,7 @@ int LinkListDelAppointPos(LinkList *pList, int pos)
 }
 
 /* 根据指定的元素得到在链表中的位置*/
-static int LinkListAccrdAppointValGetPos(LinkList *pList, ELEMENTTYPE val, int *pPos)
+static int DoubleLinkListAccrdAppointValGetPos(DoubleLinkList *pList, ELEMENTTYPE val, int *pPos)
 {
     /* 静态函数只给本原文件的函数使用，不需要判断合法性*/
     int ret;
@@ -212,7 +212,7 @@ static int LinkListAccrdAppointValGetPos(LinkList *pList, ELEMENTTYPE val, int *
     return NOT_FIND;
 }
 /* 删除链表的指定元素*/
-int LinkListDelAppointData(LinkList *pList, ELEMENTTYPE val, int (*Deletefunc)(ELEMENTTYPE vla1, ELEMENTTYPE val2))
+int DoubleLinkListDelAppointData(DoubleLinkList *pList, ELEMENTTYPE val, int (*Deletefunc)(ELEMENTTYPE vla1, ELEMENTTYPE val2))
 {
     int ret = 0;
 #if 0
@@ -220,10 +220,10 @@ int LinkListDelAppointData(LinkList *pList, ELEMENTTYPE val, int (*Deletefunc)(E
     int pos = 0;
     /* 链表长度*/
     int size = 0;
-    while (LinkListDetLen(pList, &size) && pos != NOT_FIND)
+    while (DoubleLinkListDetLen(pList, &size) && pos != NOT_FIND)
     {
-        LinkListAccrdAppointValGetPos(pList, val, &pos);
-        LinkListDelAppointPos(pList, pos);
+        DoubleLinkListAccrdAppointValGetPos(pList, val, &pos);
+        DoubleLinkListDelAppointPos(pList, pos);
     }
 #endif
     int pos = 1;
@@ -234,7 +234,7 @@ int LinkListDelAppointData(LinkList *pList, ELEMENTTYPE val, int (*Deletefunc)(E
         travelNode = travelNode->next;
         if (ret == 1)
         {
-            LinkListDelAppointPos(pList, pos);
+            DoubleLinkListDelAppointPos(pList, pos);
             ret = 0;
             pos--;
         }
@@ -246,7 +246,7 @@ int LinkListDelAppointData(LinkList *pList, ELEMENTTYPE val, int (*Deletefunc)(E
 }
 
 /* 获取链表的长度*/
-int LinkListDetLen(LinkList *pList, int *pSize)
+int DoubleLinkListDetLen(DoubleLinkList *pList, int *pSize)
 {
     int ret = 0;
     if (pList == NULL)
@@ -263,13 +263,13 @@ int LinkListDetLen(LinkList *pList, int *pSize)
 }
 
 /* 链表的销毁*/
-int LinkListDestroy(LinkList *pList)
+int DoubleLinkListDestroy(DoubleLinkList *pList)
 {
     /* 我们使用头删删除释放链表*/
     int size = 0;
-    while (LinkListDetLen(pList, &size))
+    while (DoubleLinkListDetLen(pList, &size))
     {
-        LinkListHeadDel(pList);
+        DoubleLinkListHeadDel(pList);
     }
 
     if (pList->head != NULL)
@@ -281,7 +281,7 @@ int LinkListDestroy(LinkList *pList)
 }
 
 /* 链表遍历接口*/
-int LinkListForeach(LinkList *pList, int (*printFunc)(ELEMENTTYPE))
+int DoubleLinkListForeach(DoubleLinkList *pList, int (*printFunc)(ELEMENTTYPE))
 {
     int ret = 0;
     if (pList == NULL)

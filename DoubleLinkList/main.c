@@ -34,23 +34,23 @@ int compare(ELEMENTTYPE val1, ELEMENTTYPE val2)
 int main()
 {
 #if 1
-    LinkList *list = NULL;
+    DoubleLinkList *list = NULL;
     /* 初始化链表*/
-    LinkListInit(&list);
+    DoubleLinkListInit(&list);
 #if 0
     /* 插入数据*/
     for (int idx = 0; idx < BUFFER_SIZE; idx++)
     {
-        LinkListTailInsert(list, idx);
+        DoubleLinkListTailInsert(list, idx);
     }
 
     /* 获取链表长度*/
     int size = 0;
-    LinkListDetLen(list, &size);
+    DoubleLinkListDetLen(list, &size);
     printf("size:%d\n", size);
 
     /*  遍历指针*/
-    LinkListForeach(list);
+    DoubleLinkListForeach(list);
 
   
 #endif
@@ -75,25 +75,25 @@ stuInfo stu1, stu2, stu3;
 
     // for(int idx = 0; idx < BUFFER_SIZE; idx++)
     // {
-    //     LinkListTailInsert(list, (void*)&array[idx]);
+    //     DoubleLinkListTailInsert(list, (void*)&array[idx]);
     // }
 
     // /* 链表按位置插入*/
     int a = 9;
-    LinkListAppointPosInsert(list, 4, (void *)&a);
+    DoubleLinkListAppointPosInsert(list, 4, (void *)&a);
 
     /* 链表按位置删*/
-    //LinkListDelAppointPos(list, 1);
+    //DoubleLinkListDelAppointPos(list, 1);
 
     /* 链表按元素删*/
-    LinkListDelAppointData(list, (void*)&a, compare);
+    DoubleLinkListDelAppointData(list, (void*)&a, compare);
     /* 获取链表长度*/
     int size = 0;
-    LinkListDetLen(list, &size);
+    DoubleLinkListDetLen(list, &size);
     printf("size:%d\n", size);
 
     /*  遍历指针*/
-    LinkListForeach(list, printInt);
+    DoubleLinkListForeach(list, printInt);
 #endif
 #endif
 

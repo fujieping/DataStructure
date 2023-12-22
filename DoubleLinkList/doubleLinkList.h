@@ -1,5 +1,5 @@
-#ifndef __DOUBLELINKLIST_H_
-#define __DOUBLELINKLIST_H_
+#ifndef __DOUBLELinkList_H_
+#define __DOUBLELinkList_H_
 
 #define ELEMENTTYPE void*
 
@@ -14,44 +14,44 @@ typedef struct DoubleLinkNode
 }DoubleLinkNode;
 
 /* 链表*/
-typedef struct LinkList
+typedef struct DoubleLinkList
 {
     DoubleLinkNode * head;/* 链表的虚拟头结点*/
     DoubleLinkNode * tail;/* 尾指针不需要分配空间*/
     int len;/* 链表长度*/
-}LinkList;
+}DoubleLinkList;
 
 /* 链表初始化*/
-int LinkListInit(LinkList ** pList);
+int DoubleLinkListInit(DoubleLinkList ** pList);
 
 /* 链表头插*/
-int LinkListHeadInsert(LinkList * pList, ELEMENTTYPE val);
+int DoubleLinkListHeadInsert(DoubleLinkList * pList, ELEMENTTYPE val);
 
 /* 链表尾插*/
-int LinkListTailInsert(LinkList * pList, ELEMENTTYPE val);
+int DoubleLinkListTailInsert(DoubleLinkList * pList, ELEMENTTYPE val);
 
 /* 链表指定位置插入*/
-int LinkListAppointPosInsert(LinkList * pList, int pos, ELEMENTTYPE val);
+int DoubleLinkListAppointPosInsert(DoubleLinkList * pList, int pos, ELEMENTTYPE val);
 
 /* 头删*/
-int LinkListHeadDel(LinkList * pList);
+int DoubleLinkListHeadDel(DoubleLinkList * pList);
 
 /* 伪善*/
-int LinkListTailDel(LinkList * pList);
+int DoubleLinkListTailDel(DoubleLinkList * pList);
 
 /* 指定位置删*/
-int LinkListDelAppointPos(LinkList * pList, int pos);
+int DoubleLinkListDelAppointPos(DoubleLinkList * pList, int pos);
 
 /* 删除链表的指定元素*/
-int LinkListDelAppointData(LinkList * pList, ELEMENTTYPE val, int(*Deletefunc)(ELEMENTTYPE vla1, ELEMENTTYPE val2));
+int DoubleLinkListDelAppointData(DoubleLinkList * pList, ELEMENTTYPE val, int(*Deletefunc)(ELEMENTTYPE vla1, ELEMENTTYPE val2));
 
 /* 获取链表的长度*/
-int LinkListDetLen(LinkList * pList, int *pSize);
+int DoubleLinkListDetLen(DoubleLinkList * pList, int *pSize);
 
 /* 链表的销毁*/
-int LinkListDestroy(LinkList * pList);
+int DoubleLinkListDestroy(DoubleLinkList * pList);
 
 /* 链表遍历接口*/
-int LinkListForeach(LinkList *pList, int (*printFunc)(ELEMENTTYPE));              
+int DoubleLinkListForeach(DoubleLinkList *pList, int (*printFunc)(ELEMENTTYPE));              
 
 #endif
