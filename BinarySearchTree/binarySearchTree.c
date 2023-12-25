@@ -12,13 +12,12 @@ enum STATUS_CODEH
     INVALID_ACCESS,
 };
 
-
 /* 二叉搜索树的初始化*/
 int binarySearchTreeInit(BinarySearchTree **pBstree)
 {
     int ret = 0;
-    BinarySearchTree * bstree = (BinarySearchTree *)malloc(sizeof(BinarySearchTree) * 1);
-    if(bstree == NULL)
+    BinarySearchTree *bstree = (BinarySearchTree *)malloc(sizeof(BinarySearchTree) * 1);
+    if (bstree == NULL)
     {
         return MALLOC_ERROR;
     }
@@ -31,7 +30,7 @@ int binarySearchTreeInit(BinarySearchTree **pBstree)
     }
     /* 分配根节点*/
     bstree->root = (BSTreeNode *)malloc(sizeof(BSTreeNode) * 1);
-    if(bstree->root == NULL)
+    if (bstree->root == NULL)
     {
         return MALLOC_ERROR;
     }
@@ -50,9 +49,54 @@ int binarySearchTreeInit(BinarySearchTree **pBstree)
 }
 
 /* 二叉搜索数的插入*/
-int binarySearchTreeInsert(BinarySearchTree **pBstree, ELEMENTTYPE val)
+int binarySearchTreeInsert(BinarySearchTree *pBstree, ELEMENTTYPE val)
 {
     int ret = 0;
-    
+    /* 空树*/
+    if (pBstree->size == 0)
+    {
+        /* 更新树结点个数*/
+        pBstree->size++;
+        pBstree->root->data = val;
+        return ret;
+    }
+
+    /* travelNode 指向跟结点*/
+    BSTreeNode *travelNode = pBstree->root;
+    BSTreeNode *parentNode = pBstree->root;
+
+    /* 确定符号：到底放到左边还是右边*/
+    int cmp = 0;
+    while (travelNode != NULL)
+    {
+        /* 标记父结点*/
+        parentNode = travelNode;
+        cmp = val - travelNode->data;
+        /* 插入元素 < 遍历到跟结点 */
+        if (cmp < 0)
+        {
+            travelNode = travelNode->left;
+        }
+        else if (cmp > 0)
+        {
+            travelNode = travelNode->right;
+        }
+        else
+        {
+            /* 插入元素 = 遍历到的结点*/
+            return ret;
+        }
+    }
+
+    /* 判断插入左边还是右边*/
+    if (cmp < 0)
+    {
+        parentNode->left = (val的结点);
+    }
+    else
+    {
+        parentNode->right = (val的结点);
+    }
+
     return ret;
 }
