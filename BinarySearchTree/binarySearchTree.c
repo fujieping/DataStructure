@@ -12,6 +12,11 @@ enum STATUS_CODEH
     INVALID_ACCESS,
 };
 
+static int compareFunc(ELEMENTTYPE val1, ELEMENTTYPE val2);
+
+/* 创建结点*/
+static BSTreeNode *createBSTreeNode(ELEMENTTYPE val, BSTreeNode *parentNode);
+
 /* 二叉搜索树的初始化*/
 int binarySearchTreeInit(BinarySearchTree **pBstree)
 {
@@ -66,10 +71,33 @@ static int compareFunc(ELEMENTTYPE val1, ELEMENTTYPE val2)
     #else
     return val1 > val2 ? 1:-1;
     #endif
+    return ON_SUCCESS;
+}
+
+static BSTreeNode *createBSTreeNode(ELEMENTTYPE val, BSTreeNode *parentNode)
+{
+    /* 分配新结点*/
+    BSTreeNode * newBstNode = (BSTreeNode *)malloc(sizeof(BSTreeNode) * 1);
+    if(newBstNode == NULL)
+    {
+        return NULL;
+    }
+    memset(newBstNode, 0, sizeof(BSTreeNode) * 1);
+    {
+        newBstNode->data = 0;
+        newBstNode->left = NULL;
+        newBstNode->right = NULL;
+        newBstNode->parent = NULL;
+    }
+
+    /* 赋值*/
+    newBstNode->data = val;
+    /* 新结点的paret指针赋值*/
+    newBstNode->parent = parentNode;
 }
 
 /* 二叉搜索数的插入*/
-int binarySearchTreeInsert(BinarySearchTree *pBstree, ELEMENTTYPE val)
+int binarySearchTreeInsert(BinarySearchTree *pBstree, ELEMENTTYPE val, int(*compareFunc(ELEMENTTYPE val1, ELEMENTTYPE val2)))
 {
     int ret = 0;
     /* 空树*/
@@ -107,7 +135,7 @@ int binarySearchTreeInsert(BinarySearchTree *pBstree, ELEMENTTYPE val)
             return ret;
         }
     }
-
+#if 0
     /* 分配新结点*/
     BSTreeNode * newBstNode = (BSTreeNode *)malloc(sizeof(BSTreeNode) * 1);
     if(newBstNode == NULL)
@@ -123,6 +151,10 @@ int binarySearchTreeInsert(BinarySearchTree *pBstree, ELEMENTTYPE val)
     }
     /* 新结点赋值*/
     newBstNode->data = val;
+#else
+    BSTreeNode * newBstNode = createBSTreeNode(val, parentNode);
+#endif
+    
 
     /* 判断插入左边还是右边*/
     if (cmp < 0)
@@ -138,4 +170,28 @@ int binarySearchTreeInsert(BinarySearchTree *pBstree, ELEMENTTYPE val)
     pBstree->size++;
 
     return ret;
+}
+
+/* 二叉搜索树的前序遍历*/
+int binarySearchTreePreOrderTravel(BinarySearchTree *pBstree)
+{
+
+}
+
+/* 二叉搜索树的中序遍历*/
+int binarySearchTreeInOrderTravel(BinarySearchTree *pBstree)
+{
+
+}
+
+/* 二叉搜索树的后序遍历*/
+int binarySearchTreePostOrderTravel(BinarySearchTree *pBstree)
+{
+
+}
+
+/* 二叉搜索树的层序遍历*/
+int binarySearchTreeLeOrderTravel(BinarySearchTree *pBstree)
+{
+    
 }
