@@ -108,7 +108,7 @@ int binarySearchTreeInsert(BinarySearchTree *pBstree, ELEMENTTYPE val)
         }
     }
 
-    /* 分配跟结点*/
+    /* 分配新结点*/
     BSTreeNode * newBstNode = (BSTreeNode *)malloc(sizeof(BSTreeNode) * 1);
     if(newBstNode == NULL)
     {
