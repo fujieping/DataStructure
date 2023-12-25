@@ -1,6 +1,6 @@
 #include "dynameicArrayStack.h"
 #include <stdio.h>
-
+#include "dynameicArray.h"
 #define DEFAULT_SIZE 10
 
 /* 初始化*/

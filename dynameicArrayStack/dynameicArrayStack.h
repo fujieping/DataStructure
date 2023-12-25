@@ -1,7 +1,11 @@
 #ifndef __DYNAMIC_ARRAY_STACK_H_
 #define __DYNAMIC_ARRAY_STACK_H_
 
+#if 0
 #include "dynameicArray.h"
+#else
+#include "common.h"
+#endif
 
 /* 取别名*/
 typedef dynameicArray dynameicArrayStack;
