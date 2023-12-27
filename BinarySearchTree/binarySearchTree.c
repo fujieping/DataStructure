@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "doubleLinkListQueue.h"
 #include "binarySearchTree.h"
 
 enum STATUS_CODEH
@@ -440,4 +439,52 @@ int binarySearchTreeGetHeight(BinarySearchTree *pBdtree, int *height)
     /* 解引用*/
     *height = height1;
     return ret;
+}
+
+/* 二叉搜索树的删除*/
+int binarySearchTreeDelete(BinarySearchTree *pBstree, ELEMENTTYPE val);
+
+/* 二叉搜索树的销毁*/
+int binarySearchTreeDertroy(BinarySearchTree *pBstree)
+{
+    if(pBstree == NULL)
+    {
+        return NULL_PTR;
+    }
+
+    int ret = 0;
+    DoubleLinkListQueue * pQueue = NULL;
+    doubleLinkListQueueInit(&pQueue);
+
+    BSTreeNode *traveleNode = NULL;
+    while (!doubleLinkListQueueIsEmpty(pQueue))
+    {
+        doubleLinkListQueueTop(pQueue, (void *)&traveleNode);
+        doubleLinkListQueuePop(pQueue);
+
+        if (traveleNode->left != NULL)
+        {
+            doubleLinkListQueuePush(pQueue, traveleNode->left);
+        }
+        if (traveleNode->right != NULL)
+        {
+            doubleLinkListQueuePush(pQueue, traveleNode->right);
+        }
+
+        /* 最后释放*/
+        if (traveleNode)
+        {
+            free(traveleNode);
+            traveleNode = NULL;
+        }
+    }
+    /* 释放队列*/
+    doubleLinkListQueueDestroy(pQueue);
+    /* 释放树*/
+    if (pBstree)
+    {
+        free(pBstree);
+        pBstree = NULL;
+    }
+
 }

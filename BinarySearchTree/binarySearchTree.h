@@ -3,6 +3,8 @@
 
 #define ELEMENTTYPE void*
 
+#include "doubleLinkListQueue.h"
+
 typedef struct BSTreeNode
 {
     ELEMENTTYPE data;
@@ -29,6 +31,9 @@ typedef struct BinarySearchTree
 
     /* 回调，实现自定义打印函数接口*/
     int (*printFunc)(ELEMENTTYPE val);
+
+    /* 把队列放到树里*/
+    DoubleLinkListQueue * pQueue;
 }BinarySearchTree;
 
 /* 二叉搜索树的初始化*/
@@ -56,5 +61,9 @@ int binarySearchTreeLeOrderTravel(BinarySearchTree *pBstree);
 int binarySearchTreeGetHeight(BinarySearchTree *pBdtree, int *height);
 
 /* 二叉搜索树的删除*/
+int binarySearchTreeDelete(BinarySearchTree *pBstree, ELEMENTTYPE val);
+
+/* 二叉搜索树的销毁*/
+int binarySearchTreeDertroy(BinarySearchTree *pBstree);
 
 #endif
