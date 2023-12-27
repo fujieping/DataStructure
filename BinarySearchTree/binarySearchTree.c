@@ -73,6 +73,7 @@ int(*printFunc)(ELEMENTTYPE val))
         bstree->root->parent = NULL;
     }
 
+    doubleLinkListQueueInit(bstree->pQueue);
     *pBstree = bstree;
     return ret;
 }
@@ -456,9 +457,12 @@ int binarySearchTreeDertroy(BinarySearchTree *pBstree)
     DoubleLinkListQueue * pQueue = NULL;
     doubleLinkListQueueInit(&pQueue);
 
+    /* 跟结点入队*/
+    doubleLinkListQueuePush(pQueue, pBstree->root);
     BSTreeNode *traveleNode = NULL;
     while (!doubleLinkListQueueIsEmpty(pQueue))
     {
+        
         doubleLinkListQueueTop(pQueue, (void *)&traveleNode);
         doubleLinkListQueuePop(pQueue);
 
