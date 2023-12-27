@@ -1,8 +1,6 @@
 #ifndef __BINARY_SEARCH_TREE_H_
 #define __BINARY_SEARCH_TREE_H_
 
-#define ELEMENTTYPE void*
-
 #include "doubleLinkListQueue.h"
 
 typedef struct BSTreeNode
@@ -13,31 +11,31 @@ typedef struct BSTreeNode
     /* 右子树*/
     struct BSTreeNode *right;
 
-    #if 1
+#if 1
     /* 父结点*/
     struct BSTreeNode *parent;
-    #endif
-}BSTreeNode;
+#endif
+} BSTreeNode;
 
 typedef struct BinarySearchTree
 {
     /* 根结点*/
-    BSTreeNode * root;
+    BSTreeNode *root;
     /* 树的结点个数*/
     int size;
 
     /* 钩子函数比较器，*/
-    int(*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2);
+    int (*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2);
 
     /* 回调，实现自定义打印函数接口*/
     int (*printFunc)(ELEMENTTYPE val);
 
     /* 把队列放到树里*/
-    DoubleLinkListQueue * pQueue;
-}BinarySearchTree;
+    DoubleLinkListQueue *pQueue;
+} BinarySearchTree;
 
 /* 二叉搜索树的初始化*/
-int binarySearchTreeInit(BinarySearchTree **pBstree, int(*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2), int(*printFunc)(ELEMENTTYPE val));
+int binarySearchTreeInit(BinarySearchTree **pBstree, int (*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2), int (*printFunc)(ELEMENTTYPE val));
 
 /* 二叉搜索数的插入*/
 int binarySearchTreeInsert(BinarySearchTree *pBstree, ELEMENTTYPE val);
@@ -57,8 +55,11 @@ int binarySearchTreePostOrderTravel(BinarySearchTree *pBstree);
 /* 二叉搜索树的层序遍历*/
 int binarySearchTreeLeOrderTravel(BinarySearchTree *pBstree);
 
+/* 获取二叉搜索树的结点个数*/
+int binarySearchTreeGetNodeSize(BinarySearchTree *pBstree, int *pSize);
+
 /* 获取二叉搜索树的高度*/
-int binarySearchTreeGetHeight(BinarySearchTree *pBdtree, int *height);
+int binarySearchTreeGetHeight(BinarySearchTree *pBstree, int *height);
 
 /* 二叉搜索树的删除*/
 int binarySearchTreeDelete(BinarySearchTree *pBstree, ELEMENTTYPE val);
