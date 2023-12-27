@@ -1,5 +1,5 @@
 #include "doubleLinkListQueue.h"
-
+#include "doubleLinkList.h"
 
 
 /* 队列的初始化*/

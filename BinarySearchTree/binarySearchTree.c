@@ -1,8 +1,8 @@
-#include "binarySearchTree.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "doubleLinkListQueue.h"
+#include "binarySearchTree.h"
 
 enum STATUS_CODEH
 {
@@ -14,6 +14,7 @@ enum STATUS_CODEH
 };
 
 static int compareFunc(ELEMENTTYPE val1, ELEMENTTYPE val2);
+//static int printFunc(ELEMENTTYPE val);
 
 /* 根据指定元素获取二叉搜索树的结点*/
 static BSTreeNode *baseAppointValGetBSTreeNode(BinarySearchTree *pBstree, ELEMENTTYPE val);
@@ -21,8 +22,26 @@ static BSTreeNode *baseAppointValGetBSTreeNode(BinarySearchTree *pBstree, ELEMEN
 /* 创建结点*/
 static BSTreeNode *createBSTreeNode(ELEMENTTYPE val, BSTreeNode *parentNode);
 
+/* 判断二叉搜索树度为2*/
+static int binarySearchTreeNodeHasTwochildrens(BSTreeNode *node);
+/* 判断二叉搜索树度为1*/
+static int binarySearchTreeNodeHasOnechildrens(BSTreeNode *node);
+/* 判断二叉搜索树度为0*/
+static int binarySearchTreeNodeIsLeaf(BSTreeNode *node);
+
+/* 二叉搜索树的遍历顺序*/
+static int preOrderTravel(BinarySearchTree *pBstree, BSTreeNode *node);
+static int inOrderTravel(BinarySearchTree *pBstree, BSTreeNode *node);
+static int postOrderTravel(BinarySearchTree *pBstree, BSTreeNode *node);
+
+/* 获取当前结点的前驱结点*/
+static BSTreeNode * bstreeNodepreDecessor(BSTreeNode *node);
+/* 获取当前结点的后继结点*/
+static BSTreeNode * bstreeNodepreSuccessor(BSTreeNode *node);
+
 /* 二叉搜索树的初始化*/
-int binarySearchTreeInit(BinarySearchTree **pBstree, int(*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2))
+int binarySearchTreeInit(BinarySearchTree **pBstree, int(*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2), 
+int(*printFunc)(ELEMENTTYPE val))
 {
     int ret = 0;
     BinarySearchTree *bstree = (BinarySearchTree *)malloc(sizeof(BinarySearchTree) * 1);
@@ -37,6 +56,7 @@ int binarySearchTreeInit(BinarySearchTree **pBstree, int(*compareFunc)(ELEMENTTY
         bstree->root = NULL;
         bstree->size = 0;
         bstree->compareFunc = compareFunc;
+        bstree->printFunc = printFunc;
     }
     /* 分配根节点*/
     bstree->root = (BSTreeNode *)malloc(sizeof(BSTreeNode) * 1);
@@ -58,6 +78,8 @@ int binarySearchTreeInit(BinarySearchTree **pBstree, int(*compareFunc)(ELEMENTTY
     return ret;
 }
 
+/* 比较结点*/
+#if 0
 static int compareFunc(ELEMENTTYPE val1, ELEMENTTYPE val2)
 {
     #if 0
@@ -74,11 +96,68 @@ static int compareFunc(ELEMENTTYPE val1, ELEMENTTYPE val2)
         return 0;
     }
     #else
-    return val1 > val2 ? 1:-1;
+    return *(int *)val1 > *(int *)val2 ? 1:-1;
     #endif
-    return ON_SUCCESS;
+    return 0;
+}
+#endif
+/* 打印结点*/
+#if 0
+static int printFunc(ELEMENTTYPE val)
+{
+    int ret = 0;
+    printf("data:%d\n", *(int *)val);
+    return ret;
+}
+#endif
+
+/* 判断二叉搜索树度为2*/
+static int binarySearchTreeNodeHasTwochildrens(BSTreeNode *node)
+{
+    return ((node->left != NULL) && (node->right !=NULL));
+}
+/* 判断二叉搜索树度为1*/
+static int binarySearchTreeNodeHasOnechildrens(BSTreeNode *node)
+{
+    return ((node->left == NULL) && (node->right != NULL) || (node->left != NULL) && (node->right == NULL));
+}
+/* 判断二叉搜索树度为0*/
+static int binarySearchTreeNodeIsLeaf(BSTreeNode *node)
+{
+    return ((node->left == NULL) && (node->right == NULL));
 }
 
+/* 获取当前结点的前驱结点*/
+static BSTreeNode * bstreeNodepreDecessor(BSTreeNode *node)
+{
+    /* 度为2，前驱结点是在左子树的最后一个右子树*/
+    if (binarySearchTreeNodeHasTwochildrens(node))
+    {
+        BSTreeNode *travelNode = node->left;
+        while (travelNode != NULL)
+        {
+            travelNode = travelNode->right;
+        }
+        return travelNode;
+    }
+
+    /* 程序到这里一定是度为1或0的 */
+
+    /* 度为1*/
+    if (binarySearchTreeNodeHasOnechildrens(node))
+    {
+
+    }
+    /* 度为0*/
+}
+
+/* 获取当前结点的后继结点*/
+static BSTreeNode * bstreeNodepreSuccessor(BSTreeNode *node)
+{
+
+}
+
+/* 创建一个新结点*/
 static BSTreeNode *createBSTreeNode(ELEMENTTYPE val, BSTreeNode *parentNode)
 {
     /* 分配新结点*/
@@ -177,30 +256,68 @@ int binarySearchTreeInsert(BinarySearchTree *pBstree, ELEMENTTYPE val)
     return ret;
 }
 
-
+/* 先序:根-左-右*/
+static int preOrderTravel(BinarySearchTree *pBstree, BSTreeNode *node)
+{
+    int ret = 0;
+    if (node == NULL)
+    {
+        return ret;
+    }
+    pBstree->printFunc(node->data);
+    preOrderTravel(pBstree, node->left);
+    
+    preOrderTravel(pBstree, node->right);
+}
 /* 二叉搜索树的前序遍历*/
 int binarySearchTreePreOrderTravel(BinarySearchTree *pBstree)
 {
     int ret = 0;
-
+    preOrderTravel(pBstree, pBstree->root);
     return ret;
 }
 
+/* 中序*/
+static int inOrderTravel(BinarySearchTree *pBstree, BSTreeNode *node)
+{
+    int ret = 0;
+    if (node == NULL)
+    {
+        return ret;
+    }
+    inOrderTravel(pBstree, node->left);
+    pBstree->printFunc(node->data);
+    inOrderTravel(pBstree, node->right);
+}
 /* 二叉搜索树的中序遍历*/
 int binarySearchTreeInOrderTravel(BinarySearchTree *pBstree)
 {
     int ret = 0;
-
+    inOrderTravel(pBstree, pBstree->root);
     return ret;
 }
 
+/* 后序*/
+static int postOrderTravel(BinarySearchTree *pBstree, BSTreeNode *node)
+{
+    int ret = 0;
+    if (node == NULL)
+    {
+        return ret;
+    }
+    postOrderTravel(pBstree, node->left);
+    
+    postOrderTravel(pBstree, node->right);
+    pBstree->printFunc(node->data);
+}
 /* 二叉搜索树的后序遍历*/
 int binarySearchTreePostOrderTravel(BinarySearchTree *pBstree)
 {
     int ret = 0;
-
+    postOrderTravel(pBstree, pBstree->root);
     return ret;
 }
+
 
 /* 二叉搜索树的层序遍历*/
 int binarySearchTreeLeOrderTravel(BinarySearchTree *pBstree)
@@ -212,12 +329,17 @@ int binarySearchTreeLeOrderTravel(BinarySearchTree *pBstree)
     /* 将跟结点入队*/
     doubleLinkListQueuePush(queue, pBstree->root);
 
+    int size = 0;
     BSTreeNode *nodeVal = NULL;
     /* 判断队列是否为空*/
-    while (!doubleLinkListQueueIsEmpty(queue))
+    while (doubleLinkListQueueGetSize(queue, &size))
     {
-        doubleLinkListQueueTop(queue, (void **)&nodeVal);
+        doubleLinkListQueueTop(queue, (void *)&nodeVal);
+        #if 0
         printf ("data:%d\n", nodeVal->data);
+        #else
+        pBstree->printFunc(nodeVal->data);
+        #endif
         doubleLinkListQueuePop(queue);
 
         /* 左子树入队*/
@@ -265,4 +387,57 @@ static BSTreeNode *baseAppointValGetBSTreeNode(BinarySearchTree *pBstree, ELEMEN
 int binarySearchTreeIsContainAppointVal(BinarySearchTree *pBstree, ELEMENTTYPE val)
 {
     return baseAppointValGetBSTreeNode(pBstree, val) == NULL ? 0 : 1;
+}
+
+/* 获取二叉搜索树的高度*/
+int binarySearchTreeGetHeight(BinarySearchTree *pBdtree, int *height)
+{
+    if (pBdtree == NULL)
+    {
+        return NULL_PTR;
+    }
+    int ret = 0;
+    if (pBdtree == NULL)
+    {
+        return NULL_PTR;
+    }
+
+    int queuSize = 0;
+    DoubleLinkListQueue * pQueue = NULL;
+    doubleLinkListQueueInit(&pQueue);
+
+    int height1 = 0;
+    BSTreeNode * travelNode = NULL;
+    doubleLinkListQueuePush(pQueue, pBdtree->root);
+
+    /* 树每一层结点的个数*/
+    int travelSize = 1;
+    while (!doubleLinkListQueueIsEmpty(pQueue))
+    {
+        doubleLinkListQueueTop(pQueue, (void *)&travelNode);
+        doubleLinkListQueuePop(pQueue);
+        travelSize--;
+
+        /* 左子树不为空*/
+        if (travelNode->left != NULL)
+        {
+            doubleLinkListQueuePush(pQueue,travelNode->left);
+        }
+        /* 右子树不为空*/
+        if (travelNode->right != NULL)
+        {
+            doubleLinkListQueuePush(pQueue,travelNode->right);
+        }
+        /* 树的当前层结点遍历结束*/
+        if (travelSize == 0)
+        {
+            doubleLinkListQueueGetSize(pQueue, &travelSize);
+            height1++;
+        }
+    }
+    /* 释放代码*/
+    doubleLinkListQueueDestroy(pQueue);
+    /* 解引用*/
+    *height = height1;
+    return ret;
 }

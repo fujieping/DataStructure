@@ -1,8 +1,8 @@
-
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "doubleLinkList.h"
+
 enum STATUS_CODEH
 {
     NOT_FIND = -1,
@@ -375,7 +375,7 @@ int DoubleLinkListReverseForeach(DoubleLinkList *pList, int (*printFunc)(ELEMENT
 /* 获取链表指定位置的值*/
 int DoubleLinkListHeadVal(DoubleLinkList *pList, ELEMENTTYPE *pVal)
 {
-    #if 0
+    #if 1
     return DoubleLinkListGetAppointPosVal(pList, 1, pVal);
     #else
     int ret = 0;
@@ -391,11 +391,30 @@ int DoubleLinkListHeadVal(DoubleLinkList *pList, ELEMENTTYPE *pVal)
 /* 获取链表指定位置的值*/
 int DoubleLinkListTailVal(DoubleLinkList *pList, ELEMENTTYPE *pVal)
 {
-    return DoubleLinkListGetAppointPosVal(pList, pList->len - 1, pVal);
+    return DoubleLinkListGetAppointPosVal(pList, pList->len, pVal);
 }
 
 /* 获取链表指定位置的值*/
 int DoubleLinkListGetAppointPosVal(DoubleLinkList *pList, int pos, ELEMENTTYPE *pVal)
 {
+    int ret = 0;
+    if (pList == NULL)
+    {
+        return NULL_PTR;
+    }
 
+    if (pos <= 0 || pos > pList->len)
+    {
+        return INVALID_ACCESS;
+    }
+
+    DoubleLinkNode * travelNode = pList->head->next;
+
+    while(--pos)
+    {
+        travelNode = travelNode->next;
+    }
+    *pVal = travelNode->data;
+
+    return ret;
 }
