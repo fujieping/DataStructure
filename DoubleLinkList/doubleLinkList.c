@@ -15,7 +15,7 @@ enum STATUS_CODEH
 /* 静态函数，静态前置声明*/
 static int DoubleLinkListAccrdAppointValGetPos(DoubleLinkList *pList, ELEMENTTYPE val, int *pPos);
 /* 封装新建新结点，封装成函数*/
-static DoubleLinkList *createDoubleLinkNode(ELEMENTTYPE val);
+static DoubleLinkNode *createDoubleLinkNode(ELEMENTTYPE val);
 
 /* 链表初始化*/
 int DoubleLinkListInit(DoubleLinkList **pList)
@@ -61,13 +61,13 @@ int DoubleLinkListTailInsert(DoubleLinkList *pList, ELEMENTTYPE val)
     return DoubleLinkListAppointPosInsert(pList, pList->len, val);
 }
 
-static DoubleLinkList *createDoubleLinkNode(ELEMENTTYPE val)
+static DoubleLinkNode *createDoubleLinkNode(ELEMENTTYPE val)
 {
     /* 封装结点*/
     DoubleLinkNode *newNode = (DoubleLinkNode *)malloc(sizeof(DoubleLinkNode) * 1);
     if (newNode == NULL)
     {
-        return MALLOC_ERROR;
+        return NULL;
     }
     memset(newNode, 0, sizeof(DoubleLinkNode) * 1);
     newNode->data = 0;
@@ -182,11 +182,11 @@ int DoubleLinkListDelAppointPos(DoubleLinkList *pList, int pos)
 #else
 #endif
     DoubleLinkNode *needDelNode = NULL;
-    int flag = 0;
+    //int flag = 0;
     /* 需要修改尾指针*/
     if (pos == pList->len)
     {
-        flag = 1;
+        //flag = 1;
 
         DoubleLinkNode * tmpNode = pList->tail;
         pList->tail = pList->tail->prev;
@@ -201,16 +201,16 @@ int DoubleLinkListDelAppointPos(DoubleLinkList *pList, int pos)
             // pos--;
         }
         /* 跳出循环找到一个结点*/
-        DoubleLinkNode *needDelNode = travelNode->next;
+        needDelNode = travelNode->next;
         travelNode->next = needDelNode->next;
         needDelNode->next->prev = travelNode;
     }
     
-    if (flag)
-    {
-        /* 调整尾指针*/
-        pList->tail = travelNode;
-    }
+    // if (flag)
+    // {
+    //     /* 调整尾指针*/
+    //     pList->tail = travelNode;
+    // }
 
     /* 释放内存*/
     if (needDelNode != NULL)

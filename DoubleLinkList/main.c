@@ -71,22 +71,22 @@ stuInfo stu1, stu2, stu3;
 
     stuInfo buffer[DEFAULT_NUM] = {stu1, stu2, stu3};
 #else
-    // int array[BUFFER_SIZE] = {4, 2, 9, 4, 6};
+    int array[BUFFER_SIZE] = {4, 2, 9, 9, 6};
 
-    // for(int idx = 0; idx < BUFFER_SIZE; idx++)
-    // {
-    //     DoubleLinkListTailInsert(list, (void*)&array[idx]);
-    // }
+    for(int idx = 0; idx < BUFFER_SIZE; idx++)
+    {
+        DoubleLinkListTailInsert(list, (void*)&array[idx]);
+    }
 
     // /* 链表按位置插入*/
     int a = 9;
     DoubleLinkListAppointPosInsert(list, 4, (void *)&a);
 
-    /* 链表按位置删*/
-    //DoubleLinkListDelAppointPos(list, 1);
+    // /* 链表按位置删*/
+    // DoubleLinkListDelAppointPos(list, 1);
 
-    /* 链表按元素删*/
-    DoubleLinkListDelAppointData(list, (void*)&a, compare);
+    // /* 链表按元素删*/
+    // DoubleLinkListDelAppointData(list, (void*)&a, compare);
     /* 获取链表长度*/
     int size = 0;
     DoubleLinkListDetLen(list, &size);
@@ -94,6 +94,8 @@ stuInfo stu1, stu2, stu3;
 
     /*  遍历指针*/
     DoubleLinkListForeach(list, printInt);
+    printf("------------\n");
+    DoubleLinkListReverseForeach(list, printInt);
 #endif
 #endif
 
