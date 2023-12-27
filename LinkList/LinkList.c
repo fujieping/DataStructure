@@ -27,7 +27,7 @@ int LinkListInit(LinkList **pList)
     memset(list, 0, sizeof(LinkList) * 1);
 
     list->head = (LinkNode *)malloc(sizeof(LinkNode) * 1);
-    if (list->head == NULL)
+    if (list->head == NULL) 
     {
         return MALLOC_ERROR;
     }
