@@ -16,7 +16,7 @@ int main()
     dynameicArray array;
     /* 初始化*/
     dynameicArrayInit(&array, BUFFER_SIZE);
-#if 0
+#if 1
     
         /* 插入数据*/
         int a = 3;
@@ -34,7 +34,7 @@ int main()
 
         /* 删除指定元素数据*/
         int tmp = 0;
-        dynameicArrayDeleteAppointData(&array, tmp);
+        //dynameicArrayDeleteAppointData(&array, tmp, c);
 
     {
         // int size = 0;
