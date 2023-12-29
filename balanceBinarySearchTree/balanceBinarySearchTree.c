@@ -67,9 +67,9 @@ static int AVLTreeCurrentNodeIsLeft(AVLTreeNode *node);
 static int AVLTreeCurrentNodeIsRight(AVLTreeNode *node);
 
 /* 右旋*/
-static int AVLTreeCurrentNodeRotateRight(BalanceBinarySearchTree *pBstree, AVLTreeNode *node);
+static int AVLTreeCurrentNodeRotateRight(BalanceBinarySearchTree *pBstree, AVLTreeNode *grand);
 /* 左旋*/
-static int AVLTreeCurrentNodeRotateLeft(BalanceBinarySearchTree *pBstree, AVLTreeNode *node);
+static int AVLTreeCurrentNodeRotateLeft(BalanceBinarySearchTree *pBstree, AVLTreeNode *grand);
 
 /* 二叉搜索树的初始化*/
 int BalanceBinarySearchTreeInit(BalanceBinarySearchTree **pBstree, int (*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2),
@@ -312,7 +312,7 @@ static AVLTreeNode * AVLTreeNodeGetChildIsTaller(AVLTreeNode *node)
     }
 }
 
-/* 右旋*/
+/* 右旋:LL*/
 static int AVLTreeCurrentNodeRotateRight(BalanceBinarySearchTree *pBstree, AVLTreeNode *grand)
 {
     AVLTreeNode *parent = grand->left;
@@ -343,12 +343,40 @@ static int AVLTreeCurrentNodeRotateRight(BalanceBinarySearchTree *pBstree, AVLTr
     }
 
     AVLTreeNodeUpdateHeight(grand);
-    AVLTreeNodeUpdateHeight(grand);
+    AVLTreeNodeUpdateHeight(parent);
 }
-/* 左旋*/
-static int AVLTreeCurrentNodeRotateLeft(BalanceBinarySearchTree *pBstree, AVLTreeNode *node)
+/* 左旋:RR*/
+static int AVLTreeCurrentNodeRotateLeft(BalanceBinarySearchTree *pBstree, AVLTreeNode *grand)
 {
+    /* */
+    AVLTreeNode *parent = grand->right;
+    AVLTreeNode *child = parent->left;
+    grand->right = child;
+    parent->left = grand;
 
+    /* parent 成为新的根结点*/
+    parent->parent = grand->parent;
+    /* grand 为父节点的左子结点*/
+    if (AVLTreeCurrentNodeIsLeft(grand))
+    {
+        grand->parent->left = parent;
+    }/* grand 为父节点的右子结点*/
+    else if (AVLTreeCurrentNodeIsRight(grand))
+    {
+        grand->parent->right = parent;
+    }/* grand 为树的根结点*/
+    else
+    {
+        pBstree->root = parent;
+    }
+
+    if (child)
+    {
+        child->parent = grand;
+    }
+    /* 更新高度*/
+    AVLTreeNodeUpdateHeight(grand);
+    AVLTreeNodeUpdateHeight(parent);
 }
 
 
