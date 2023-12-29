@@ -58,6 +58,9 @@ static int AVLTreeNodeUpdateHeight(AVLTreeNode *node);
 /* 调整平衡*/
 static int AVLTreeNodeAdjustBalance(BalanceBinarySearchTree *pBstree, AVLTreeNode *node);
 
+/* 获取AVL结点较高的子结点*/
+static AVLTreeNode * AVLTreeNodeGetChildIsTaller(AVLTreeNode *node);
+
 /* 二叉搜索树的初始化*/
 int BalanceBinarySearchTreeInit(BalanceBinarySearchTree **pBstree, int (*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2),
                                 int (*printFunc)(ELEMENTTYPE val))
@@ -261,12 +264,62 @@ static AVLTreeNode *createAVLTreeNode(ELEMENTTYPE val, AVLTreeNode *parentNode)
 /* 二叉搜索树删除*/
 static int BalanceBinarySearchTreeDeleteNode(BalanceBinarySearchTree *pBstree, AVLTreeNode *node);
 
+static AVLTreeNode * AVLTreeNodeGetChildIsTaller(AVLTreeNode *node)
+{
+    int leftHeight = node->left == NULL ? 0 : node->left;
+    int rightHeight = node->right == NULL ? 0 : node->right;
+    if (leftHeight > rightHeight)
+    {
+        return node->left;
+    }
+    else if (leftHeight < rightHeight)
+    {
+        return node->right;
+    }
+    else
+    {
+        /* leftHeight == rightHeight */
+        if (node->parent != NULL && node == node->parent->left)
+        {
+            return node->left;
+        }
+        else
+        {
+            return node->right;
+        }
+    }
+}
+
 /* 调整平衡*/
 static int AVLTreeNodeAdjustBalance(BalanceBinarySearchTree *pBstree, AVLTreeNode *node)
 {
-    int ret = 0;
-
-    return ret;
+    /* LL RR LR RL*/
+    AVLTreeNode *parent = AVLTreeNodeGetChildIsTaller(node);
+    AVLTreeNode *child = AVLTreeNodeGetChildIsTaller(parent);
+    /* L*/
+    if (parent == node->left)
+    {
+        if (child == parent->left)
+        {
+            /* LL*/
+        }
+        else
+        {
+            /* LR*/
+        }
+    }
+    else
+    {
+        /* R*/
+        if (child == parent->left)
+        {
+            /* RL*/
+        }
+        else
+        {
+            /* RR*/
+        }
+    }
 }
 
 /* 添加结点之后的操作，判断平衡*/
@@ -283,7 +336,7 @@ static int insertNodeAfter(BalanceBinarySearchTree *pBstree, AVLTreeNode *node)
         }
         else
         {
-            /* 开始旋转*/
+            /* 开始调整*/
             AVLTreeNodeAdjustBalance(pBstree, node);
 
             /* 调整完最低的不平衡结点，上面的不平衡结点就已经平衡*/
