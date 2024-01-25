@@ -1,69 +1,84 @@
-#ifndef __BINARY_SEARCH_TREE_H_
-#define __BINARY_SEARCH_TREE_H_
+#ifndef __BALANCE_BINARY_SEARCH_TREE_H_
+#define __BALANCE_BINARY_SEARCH_TREE_H_
+#include <stdio.h>
 
-#include "common.h"
-//#define ELEMENTTYPE int
+#define ELEMENTTYPE void*
 
-typedef struct AVLTreeNode
-{ 
-  ELEMENTTYPE data;
-  int height;                  /* 结点维护一个高度属性 */
-  struct AVLTreeNode * left;   /* 左子树 */
-  struct AVLTreeNode * right;  /* 右子树 */
-  struct AVLTreeNode * parent; /* 父结点 */
-
-}AVLTreeNode;
-
-typedef struct BalanceBinarySearchTree
+/* 树的结点 (保留之前二叉搜索树结点结构体) */
+typedef struct BSTreeNode
 {
-   AVLTreeNode * root;  /* 根结点 */
-   int size;           /* 树的结点个数 */
-   int height;         /* 树的高度 */
-  /* 钩子函数比较器 放到结构体内部 */
-   int (*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2);
+    ELEMENTTYPE val;
+    struct BSTreeNode * left;
+    struct BSTreeNode * right;
+    struct BSTreeNode * parent;
+} BSTreeNode;
 
-   /* 钩子函数 包装器实现自定义打印函数接口 */
-   int (*printFunc)(ELEMENTTYPE val);
-   
+/* 树的结点 */
+typedef struct AVLTreeNode
+{
+    ELEMENTTYPE val;
+    /* AVL树维护了一个高度的属性, 用于计算当前结点的平衡因子 */
+    int height;     
+    struct AVLTreeNode * left;
+    struct AVLTreeNode * right;
+    struct AVLTreeNode * parent;
+} AVLTreeNode;
 
-}BalanceBinarySearchTree;
+typedef struct BinarySearchTree
+{
+    int size;       /* 结点的个数 */
+    int height;     /* 树的高度 */
 
+    /* 钩子🪝函数放在树内部 */
+    int (*compareFunc)(ELEMENTTYPE, ELEMENTTYPE);
+    AVLTreeNode * root;
+} BinarySearchTree;
 
-/* 二叉搜索树的初始化 */
-int balanceBinarySearchTreeInit(BalanceBinarySearchTree **pBstree, int (*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2), int (*printFunc)(ELEMENTTYPE val));
+/* 将二叉搜索树的结点 重命名为平衡二叉搜索树的结点 */
+typedef BinarySearchTree BalanceBinarySearchTree;
 
-/* 二叉搜索树的插入 */
-int balanceBinarySearchTreeInsert(BalanceBinarySearchTree *pBstree, ELEMENTTYPE val);
+/* 二叉搜索树初始化 */
+int balanceBinarySearchTreeInit(BalanceBinarySearchTree **pBSTree, int (*compareFunc)(ELEMENTTYPE, ELEMENTTYPE));
 
-/* 二叉搜索树是否包含指定的元素 */
-int balanceBinarySearchTreeIsContainAppointVal(BalanceBinarySearchTree *pBstree, ELEMENTTYPE val);
+/* 二叉搜索树新增元素 */
+int balanceBinarySearchTreeInsert(BalanceBinarySearchTree *pBSTree, ELEMENTTYPE val);
 
-/* 二叉搜索树的前序遍历 */
-int balanceBinarySearchTreePreOrderTravel(BalanceBinarySearchTree *pBstree);
+/* 二叉搜索树删除元素 */
+int balanceBinarySearchTreeRemove(BalanceBinarySearchTree *pBSTree, ELEMENTTYPE val);
 
-/* 二叉搜索树的中序遍历 */
-int balanceBinarySearchTreeInOrderTravel(BalanceBinarySearchTree *pBstree);
+/* 二叉搜索树中是否包含指定元素 */
+int balanceBinarySearchTreeIsContainVal(BalanceBinarySearchTree *pBSTree, ELEMENTTYPE val);
 
-/* 二叉搜索树的后序遍历 */
-int balanceBinarySearchTreePostOrderTravel(BalanceBinarySearchTree *pBstree);
+/* 二叉搜索树是否为空树 */
+int balanceBinarySearchTreeIsNull(BalanceBinarySearchTree *pBSTree);
 
-/* 二叉搜索树的层序遍历 */
-int balanceBinarySearchTreeLeveOrderTravel(BalanceBinarySearchTree *pBstree);
+/* 二叉搜索树元素的个数 */
+int balanceBinarySearchTreeGetSize(BalanceBinarySearchTree *pBSTree, int *pSize);
 
-/* 获取二叉搜索树的结点个数 */
-int balanceBinarySearchTreeGetNodeSize(BalanceBinarySearchTree *pBstree, int *pSize);
+/* 前序遍历 */
+int balanceBinarySearchTreePreOrderTravel(BalanceBinarySearchTree *pBSTree, int (*printFunc)(void *));
 
-/* 获取二叉搜索树的高度 */
-int balanceBinarySearchTreeGetHeight(BalanceBinarySearchTree *pBstree, int *pHeight);
+/* 中序遍历 */
+int balanceBinarySearchTreeInOrderTravel(BalanceBinarySearchTree *pBSTree, int (*printFunc)(void *));
 
-/* 二叉搜索树的删除 */
-int balanceBinarySearchTreeDelete(BalanceBinarySearchTree *pBstree, ELEMENTTYPE val);
+/* 后序遍历 */
+int balanceBinarySearchTreePostOrderTravel(BalanceBinarySearchTree *pBSTree, int (*printFunc)(void *));
 
-/* 二叉搜索树的销毁 */
-int balanceBinarySearchTreeDestroy(BalanceBinarySearchTree *pBstree);
+/* 层序遍历 */
+int balanceBinarySearchTreeLevelOrderTravel(BalanceBinarySearchTree *pBSTree, int (*printFunc)(void *));
 
-/* 判断二叉搜索树是否为完全二叉搜索树 */
+/* 获取树的高度 */
+int balanceBinarySearchTreeGetHeight(BalanceBinarySearchTree *pBSTree, int *pHeight);
+
+/* 二叉树的打印器 */
+int balanceBinarySearchTreeFormatPrintOut(BalanceBinarySearchTree *pBSTree);
+
+/* 判断树是否是完全二叉树 */
 int balanceBinarySearchTreeIsComplete(BalanceBinarySearchTree *pBSTree);
 
+/* 二叉搜索树的销毁 */
+int balanceBinarySearchTreeDestroy(BalanceBinarySearchTree *pBSTree);
 
-#endif
+/* 二叉树的保存 */
+int balanceBinarySearchTreeSave2File(BalanceBinarySearchTree *pBSTree, const char *pathname);
+#endif  // __BINARY_SEARCH_TREE_H_

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "balanceBinarySearchTree.h"
 
-#define BUFFER_SIZE 10
+#define BUFFER_SIZE 4
 
 /* 比较基础数据*/
 int compareBasicDataFunc(ELEMENTTYPE val1, ELEMENTTYPE val2)
@@ -25,7 +25,7 @@ int main()
     BalanceBinarySearchTree *pBsTree = NULL;
     balanceBinarySearchTreeInit(&pBsTree, compareBasicDataFunc, printBasicDataFunc);
 
-    int Array[BUFFER_SIZE] = {13, 14, 15, 12, 11, 17, 16, 8, 9, 1};
+    int Array[BUFFER_SIZE] = {13, 12, 11, 10};
     for (int idx = 0; idx <BUFFER_SIZE; idx++)
     {
         balanceBinarySearchTreeInsert(pBsTree, (void *)&Array[idx]);
@@ -41,7 +41,7 @@ int main()
     printf("height:%d\n", height);
 
     /* 层次遍历*/
-    balanceBinarySearchTreeLeveOrderTravel(pBsTree);
+    balanceBinarySearchTreeLevelOrderTravel(pBsTree);
     printf("\n");
 
     /* 先序遍历*/
@@ -49,18 +49,25 @@ int main()
     // printf("\n");
 
     /* 中序遍历*/
-    balanceBinarySearchTreeInOrderTravel(pBsTree);
-    printf("\n");
-
-    /* 后序遍历*/
-    // BalanceBinarySearchTreePostOrderTravel(pBsTree);
+    // balanceBinarySearchTreeInOrderTravel(pBsTree);
     // printf("\n");
 
-    /* 删除度为2的结点*/
-    int delVal = 56;
-    balanceBinarySearchTreeDelete(pBsTree, (void *)&delVal);
+    int tmp = 13;
+    balanceBinarySearchTreeDelete(pBsTree, &tmp);
+    printf("\n");
 
-    
+    size = 0;
+    balanceBinarySearchTreeGetNodeSize(pBsTree, &size);
+    printf("size:%d\n", size);
+
+    height = 0;
+    /* 二叉搜索树的高度*/
+    balanceBinarySearchTreeGetHeight(pBsTree, &height);
+    printf("height:%d\n", height);
+
+    /* 层次遍历*/
+    balanceBinarySearchTreeLevelOrderTravel(pBsTree);
+    printf("\n");
 
 
     return 0;
