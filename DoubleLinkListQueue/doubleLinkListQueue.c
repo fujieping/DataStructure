@@ -1,53 +1,49 @@
 #include "doubleLinkListQueue.h"
 #include "doubleLinkList.h"
 
-
-/* 队列的初始化*/
-int doubleLinkListQueueInit(DoubleLinkListQueue **pQueue)
+/* 双向链表队列 初始化 */
+int doublelinklistQueueInit(doubleLinkListQueue ** pQueue)
 {
-    return DoubleLinkListInit(pQueue);
+    int ret = 0;
+    doubleLinkListInit(pQueue);
+    return ret;
 }
 
-/* 入队*/
-int doubleLinkListQueuePush(DoubleLinkListQueue *pQueue, ELEMENTTYPE val)
+/* 双向链表队列 入队 */
+int doublelinklistQueuePush(doubleLinkListQueue * pQueue, ELEMENTTYPE val)
 {
-    return DoubleLinkListTailInsert(pQueue, val);
+    return doubleLinkListTailInsert(pQueue, val);
 }
 
-/* 队头元素*/
-int doubleLinkListQueueTop(DoubleLinkListQueue *pQueue, ELEMENTTYPE *pVal)
+/* 双向链表队列 出队 */
+int doublelinklistQueuePop(doubleLinkListQueue * pQueue)
 {
-    return DoubleLinkListHeadVal(pQueue, pVal);
+    return doubleLinkListHeadDel(pQueue);
 }
 
-/* 队尾元素*/
-int doubleLinkListQueueRear(DoubleLinkListQueue *pQueue, ELEMENTTYPE *pVal)
+/* 双向链表队列 队头元素 */
+int doublelinklistQueueTop(doubleLinkListQueue * pQueue, ELEMENTTYPE *pVal)
 {
-    return DoubleLinkListTailVal(pQueue, pVal);
+    return doubleLinkListGetHeadVal(pQueue, pVal);
 }
 
-/* 出队*/
-int doubleLinkListQueuePop(DoubleLinkListQueue *pQueue)
+/* 双向链表队列 队尾元素 */
+int doublelinklistQueueRear(doubleLinkListQueue * pQueue, ELEMENTTYPE *pVal)
 {
-    return DoubleLinkListHeadDel(pQueue);
+    return doubleLinkListGetTailVal(pQueue, pVal);
 }
 
-/* 队列大小*/
-int doubleLinkListQueueGetSize(DoubleLinkListQueue *pQueue, int *pSize)
+/* 双向链表队列 大小 */
+int doublelinklistQueueSize(doubleLinkListQueue * pQueue, int *pSize)
 {
-    return DoubleLinkListDetLen(pQueue, pSize);
+    doubleLinkListGetLength(pQueue, pSize);
+    return *pSize;
 }
 
-/* 队列判空*/
-int doubleLinkListQueueIsEmpty(DoubleLinkListQueue *pQueue)
+/* 双向链表队列 销毁 */
+int doublelinklistQueueDestory(doubleLinkListQueue * pQueue)
 {
-    int size = 0;
-    DoubleLinkListDetLen(pQueue, &size);
-    return size == 0 ? 1:0;
-}
-
-/* 队列销毁*/
-int doubleLinkListQueueDestroy(DoubleLinkListQueue *pQueue)
-{
-    return DoubleLinkListDestroy(pQueue);
+    int ret = 0;
+    doubleLinkListDestory(pQueue);
+    return ret;
 }

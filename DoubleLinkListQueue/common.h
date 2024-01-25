@@ -1,24 +1,23 @@
 #ifndef __COMMON_H_
 #define __COMMON_H_
 
+
+/* 万能指针 */
 #define ELEMENTTYPE void*
 
-/* 链表结点取别名*/
-typedef struct DoubleLinkNode
+typedef struct node
 {
-    ELEMENTTYPE data;
-    /* 指向前一个节点的指针*/
-    struct DoubleLinkNode *prev;
-    /* 指向下一个节点的指针*/
-    struct DoubleLinkNode *next;/* 指针类型*/
-}DoubleLinkNode;
+    ELEMENTTYPE val;                /* 数据 */
+    struct node * prev;     /* 前置指针 */
+    struct node * next;     /* 后置指针 */
+} Node;
 
-/* 链表*/
-typedef struct DoubleLinkList
+typedef struct linkList
 {
-    DoubleLinkNode * head;/* 链表的虚拟头结点*/
-    DoubleLinkNode * tail;/* 尾指针不需要分配空间*/
-    int len;/* 链表长度*/
-}DoubleLinkList;
+    Node *head;
+    Node *tail;
+    int len;
+} linkList;
 
-#endif
+
+#endif //__COMMON_H_
