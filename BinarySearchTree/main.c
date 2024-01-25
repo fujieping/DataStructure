@@ -110,6 +110,5 @@ int main()
     binarySearchTreeInOrderTravel(pBsTree);
     printf("\n");
 
-
     return 0;
 }
