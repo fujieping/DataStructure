@@ -15,7 +15,7 @@ typedef struct stuInfo
 int printStruct(void *arg)
 {
    stuInfo *info = (stuInfo*)arg;
-   printf("arg:%d\tsex:%c\n",info->age, info->sex);
+   printf(":%d\tsex:%c\n",info->age, info->sex);
 }
 
 int printInt(void *arg)
