@@ -1,59 +1,71 @@
-#ifndef __DOUBLELinkList_H_
-#define __DOUBLELinkList_H_
+#ifndef __DOUBLE_LINKLIST_H_
+#define __DOUBLE_LINKLIST_H_
 
-#define ELEMENTTYPE void*
+#define ELEMENTTYPE void *
 
-/* 链表结点取别名*/
-typedef struct DoubleLinkNode
+/* 状态码 */
+enum STATUSCODE
 {
-    ELEMENTTYPE data;
-    /* 指向前一个节点的指针*/
-    struct DoubleLinkNode *prev;
-    /* 指向下一个节点的指针*/
-    struct DoubleLinkNode *next;/* 指针类型*/
-}DoubleLinkNode;
+    ON_SUCCESS,
+    NULL_PTR,
+    MALLOC_ERR,
+    INVAILD_ACCESS,
+};
 
-/* 链表*/
-typedef struct DoubleLinkList
+typedef struct node
 {
-    DoubleLinkNode * head;/* 链表的虚拟头结点*/
-    DoubleLinkNode * tail;/* 尾指针不需要分配空间*/
-    int len;/* 链表长度*/
-}DoubleLinkList;
+    ELEMENTTYPE val;                /* 数据 */
+    struct node * prev;     /* 前置指针 */
+    struct node * next;     /* 后置指针 */
+} Node;
 
-/* 链表初始化*/
-int DoubleLinkListInit(DoubleLinkList ** pList);
+typedef struct linkList
+{
+    Node *head;
+    Node *tail;
+    int len;
+} linkList;
 
-/* 链表头插*/
-int DoubleLinkListHeadInsert(DoubleLinkList * pList, ELEMENTTYPE val);
+/* 链表的初始化 */
+int doubleLinkListInit(linkList **pList);
 
-/* 链表尾插*/
-int DoubleLinkListTailInsert(DoubleLinkList * pList, ELEMENTTYPE val);
+/* 头插 */
+int doubleLinkListHeadInsert(linkList *pList, ELEMENTTYPE val);
 
-/* 链表指定位置插入*/
-int DoubleLinkListAppointPosInsert(DoubleLinkList * pList, int pos, ELEMENTTYPE val);
+/* 尾插 */
+int doubleLinkListTailInsert(linkList *pList, ELEMENTTYPE val);
 
-/* 头删*/
-int DoubleLinkListHeadDel(DoubleLinkList * pList);
+/* 指定位置插入 */
+int doubleLinkListAppointPosInsert(linkList *pList, int pos, ELEMENTTYPE val);
 
-/* 伪善*/
-int DoubleLinkListTailDel(DoubleLinkList * pList);
+/* 获取链表的数据 */
+int doubleLinkListGetLength(linkList *pList, int *pLen);
 
-/* 指定位置删*/
-int DoubleLinkListDelAppointPos(DoubleLinkList * pList, int pos);
+/* 顺序遍历链表 */
+int doubleLinkListSeqForeach(linkList *pList, void (*printFunc)(void *arg));
 
-/* 删除链表的指定元素*/
-int DoubleLinkListDelAppointData(DoubleLinkList * pList, ELEMENTTYPE val, int(*Deletefunc)(ELEMENTTYPE vla1, ELEMENTTYPE val2));
+/* 逆序遍历链表 */
+int doubleLinkListReverseForeach(linkList *pList, void (*printFunc)(void *arg));
 
-/* 获取链表的长度*/
-int DoubleLinkListDetLen(DoubleLinkList * pList, int *pSize);
+/* 头删 */
+int doubleLinkListHeadDel(linkList *pList);
 
-/* 链表的销毁*/
-int DoubleLinkListDestroy(DoubleLinkList * pList);
+/* 尾删 */
+int doubleLinkListTailDel(linkList *pList);
 
-/* 链表遍历接口*/
-int DoubleLinkListForeach(DoubleLinkList *pList, int (*printFunc)(ELEMENTTYPE));              
+/* 任意位置删除 */
+int doubleLinkListAppointPosDel(linkList *pList, int pos);
 
-/* 双向链表的逆序*/
-int DoubleLinkListReverseForeach(DoubleLinkList *pList, int (*printFunc)(ELEMENTTYPE));
-#endif
+/* 链表销毁 */
+int doubleLinkListDestory(linkList *pList);
+
+/* 获取链表 头部数据 */
+int doubleLinkListGetHeadVal(linkList *pList, ELEMENTTYPE *pVal);
+
+/* 获取链表 尾部数据 */
+int doubleLinkListGetTailVal(linkList *pList, ELEMENTTYPE *pVal);
+
+/* 获取链表 指定位置数据 */
+int doubleLinkListGetAppointPosVal(linkList *pList, int pos, ELEMENTTYPE *pVal);
+
+#endif  //__LINKLIST_H_
