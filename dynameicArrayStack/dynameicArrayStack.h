@@ -1,34 +1,27 @@
-#ifndef __DYNAMIC_ARRAY_STACK_H_
-#define __DYNAMIC_ARRAY_STACK_H_
-
-#if 0
-#include "dynameicArray.h"
-#else
+#ifndef __DYNAMEIC_ARRAY_STACK_H_
+#define __DYNAMEIC_ARRAY_STACK_H_
 #include "common.h"
-#endif
 
-/* 取别名*/
-typedef dynameicArray dynameicArrayStack;
+/* 取动态数组的名字为栈 在栈里面不使用动态数组的命名 */
+// extern struct DynamicArray;
+typedef struct DynamicArray ArrayStack;
 
-/* 初始化*/
-int dynameicArrayStackInit(dynameicArrayStack *pStack);
+/* 栈的初始化 */
+int arrayStackInit(ArrayStack * pStack);
 
-/* 压栈*/
-int dynameicArrayStackPush(dynameicArrayStack *pStack, ELEMENTTYPE val);
+/* 栈的插入数据 */
+int arrayStackPush(ArrayStack * pStack, ELEMENTTYPE val);
 
-/* 查看栈顶元素*/
-int dynameicArrayStackTop(dynameicArrayStack *pStack, ELEMENTTYPE *pVal);
+/* 栈的弹出数据 */
+int arrayStackPop(ArrayStack * pStack);
 
-/* 出栈*/
-int dynameicArrayStackPop(dynameicArrayStack *pStack);
+/* 查看栈顶数据 */
+int arrayStackTop(ArrayStack * pStack, ELEMENTTYPE *pVal);
 
-/* 栈是否为空*/
-int dynameicArrayStackEmpty(dynameicArrayStack *pStack);
+/* 获取栈的大小 */
+int arrayStackGetSize(ArrayStack * pStack, int *pSize);
 
-/* 获得栈的大小*/
-int dynameicArrayStackGetSize(dynameicArrayStack *pStack, int *pSize);
+/* 栈的销毁 */
+int arrayStackDestory(ArrayStack * pStack);
 
-/* 栈的销毁*/
-int dynameicArrayStackDestroy(dynameicArrayStack *pStack);
-
-#endif
+#endif  //__ARRAYSTACK_H_

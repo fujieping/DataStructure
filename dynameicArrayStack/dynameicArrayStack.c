@@ -1,54 +1,52 @@
-#include "dynameicArrayStack.h"
-#include <stdio.h>
 #include "dynameicArray.h"
-#define DEFAULT_SIZE 10
+#include "dynameicArrayStack.h"
 
-/* 初始化*/
-int dynameicArrayStackInit(dynameicArrayStack *pStack)
+/* 栈的初始化 */
+int arrayStackInit(ArrayStack * pStack)
 {
-    return dynameicArrayInit(pStack, DEFAULT_SIZE);
+    return dynamicArrayInit(pStack);
 }
 
-/* 压栈*/
-int dynameicArrayStackPush(dynameicArrayStack *pStack, ELEMENTTYPE val)
+/* 栈的插入数据 */
+int arrayStackPush(ArrayStack * pStack, ELEMENTTYPE val)
 {
-    /* 调用动态数组的尾插*/
-    return dynameicArrayInsertData(pStack, val);
+    return dynamicArrayInsert(pStack, val);
 }
 
-/* 查看栈顶元素*/
-int dynameicArrayStackTop(dynameicArrayStack *pStack, ELEMENTTYPE *pVal)
+/* 栈的弹出数据 */
+int arrayStackPop(ArrayStack * pStack)
 {
-    /* 获取指定位置的元素*/
-    return dynameicArrayDeleteAppointPosVal(pStack, pStack->len - 1, pVal);
+    int ret = 0;
+
+    int stackSize = 0;
+    /* 获取栈的大小 */
+    dynamicArrayGetSize(pStack, &stackSize);
+    /* 删除末尾位置 */
+    return dynamicArrayDelAppointPos(pStack, stackSize);
 }
 
-/* 出栈*/
-int dynameicArrayStackPop(dynameicArrayStack *pStack)
+/* 查看栈顶数据 */
+int arrayStackTop(ArrayStack * pStack, ELEMENTTYPE *pVal)
 {
-    return dynameicArrayDeleteData(pStack);
+    int ret = 0;
+    int stackSize = 0;
+    /* 获取栈的大小 */
+    dynamicArrayGetSize(pStack, &stackSize);
+    /* 获取栈顶的数据 */
+    dynamicArrayGetAppointPosVal(pStack, stackSize - 1, pVal);
+    return ret;
 }
 
-/* 栈是否为空*/
-int dynameicArrayStackEmpty(dynameicArrayStack *pStack)
+/* 获取栈的大小 */
+int arrayStackGetSize(ArrayStack * pStack, int *pSize)
 {
-    int size = 0;
-    dynameicArrayGetSize(pStack, &size);
-    return size == 0 ? 1 : 0;
+    dynamicArrayGetSize(pStack, pSize);
+    return *pSize;
 }
 
-/* 获得栈的大小*/
-int dynameicArrayStackGetSize(dynameicArrayStack *pStack, int *pSize)
+/* 栈的销毁 */
+int arrayStackDestory(ArrayStack * pStack)
 {
-#if 1
-    return dynameicArrayGetSize(pStack, pSize);
-#else
-    dynameicArrayGetSize(pStack, pSize);
-#endif
-}
-
-/* 栈的销毁*/
-int dynameicArrayStackDestroy(dynameicArrayStack *pStack)
-{
-    return dynameicArrayDestroy(pStack);
+    int ret = 0;
+    return dynamicArrayDestory(pStack);
 }
